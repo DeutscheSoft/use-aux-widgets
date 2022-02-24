@@ -1,0 +1,19 @@
+{
+  "name": "@deutschesoft/use-aux-widgets",
+  "version": "1.0.0",
+  "description": "A collection of react hooks for aux-widgets and awml.",
+  "main": "index.js",
+  "type": "module",
+  "module": "index.js",
+  "scripts": {
+  },
+  "sideEffects": false,
+  "author": "Arne Goedeke",
+  "license": "GPL-2.0-only",
+  "peerDependencies": {
+    "react": "^16.8.0  || ^17.0.0",
+    "react-dom": "^16.8.0  || ^17.0.0",
+    "@deutschesoft/aux-widgets": "^1.0.0",
+    "@deutschesoft/awml": "^2.1.0"
+  }
+}
