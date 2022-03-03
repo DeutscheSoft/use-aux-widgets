@@ -1,4 +1,4 @@
-import { createRef, Component } from 'react';
+import { createRef, Component, createElement } from 'react';
 import { DynamicValue } from '@deutschesoft/awml/src/index.pure.js';
 import { Bindings } from '@deutschesoft/awml/src/bindings.js';
 import { hasOwnProperty } from './hasOwnProperty.js';
@@ -270,7 +270,7 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
     }
 
     render() {
-      return <div ref={ this.elementRef }></div>;
+      return createElement('div', { ref: this.elementRef });
     }
   };
 }
