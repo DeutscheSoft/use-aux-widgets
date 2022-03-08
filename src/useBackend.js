@@ -40,11 +40,6 @@ function subscribeBackend(factory, calculateRetryTimeout, onError, callback) {
       backend = null;
     }
 
-    backend.on('error', (error) => {
-      retry();
-      onError(error);
-    });
-
     backend.on('close', () => {
       if (!active)
         return;
@@ -60,6 +55,12 @@ function subscribeBackend(factory, calculateRetryTimeout, onError, callback) {
     try {
       const onBackend = (_backend) => {
         backend = _backend;
+
+        backend.on('error', (error) => {
+          retry();
+          onError(error);
+        });
+
         if (_backend.isOpen) {
           onOpen(_backend);
         } else if (_backend.isInit) {
@@ -154,7 +155,7 @@ function calculateRetryTimeout(retryTimeout, retryCount) {
  *      with the `name + ':'` prefix.
  * @param {function} factory
  *      A factory function which creates the backend instance.
- * @param {function|number} retryTimeout
+ * @param {function|number} [retryTimeout=500]
  *      This argument is used to configure the delay between reconnects. If
  *      the argument is a number, it is used as a timeout in milliseconds with
  *      some exponential backoff applied. If it is a function, it is called with
@@ -166,7 +167,7 @@ function calculateRetryTimeout(retryTimeout, retryCount) {
  */
 export function useBackend(name, factory, retryTimeout, onError) {
   onError = useEventHandler(onError || defaultErrorHandler);
-  retryTimeout = useLatest(retryTimeout);
+  retryTimeout = useLatest(retryTimeout || 500);
 
   const [ backend, setBackend ] = useState(null);
   const reconnect = useRef(defaultReconnect);
