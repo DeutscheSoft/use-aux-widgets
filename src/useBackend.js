@@ -17,7 +17,7 @@ function subscribeBackend(factory, calculateRetryTimeout, onError, callback) {
 
     callback(backend = null);
 
-    const timeout = calculateRetryTimeout(retryCount);
+    const timeout = calculateRetryTimeout(retryCount++);
 
     if (timeout > 0) {
       timeoutId = setTimeout(
