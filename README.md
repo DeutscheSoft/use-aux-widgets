@@ -41,6 +41,6 @@ A collection of hooks for integrating
 ## License
 
 `use-aux-widgets` is available under the terms of the GNU General Public License version 2.
-See the LICENSE file for details.
+See the files `COPYING` and `gplv2.txt` for details.
 
-Copyright (c) 2015-2022 DeusO GmbH
+Copyright (c) 2022 DeusO GmbH
