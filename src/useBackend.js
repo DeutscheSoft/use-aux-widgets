@@ -164,6 +164,10 @@ function calculateRetryTimeout(retryTimeout, retryCount) {
  * @param {function} [onError]
  *      This function is called whenever a connection error happens in this
  *      backend. If no callback is supplied, `console.error` is used.
+ *
+ * @returns
+ *      Returns an array which contains the backend (or null when not connected)
+ *      and a callback which can be used to trigger a reconnect.
  */
 export function useBackend(name, factory, retryTimeout, onError) {
   onError = useEventHandler(onError || defaultErrorHandler);
