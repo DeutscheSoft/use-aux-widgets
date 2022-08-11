@@ -33,7 +33,7 @@ export function useWidget(Widget, options) {
     return () => {
       widget.destroy();
     };
-  }, [ widget ]);
+  }, [ Widget ]);
 
   return widget;
 }
