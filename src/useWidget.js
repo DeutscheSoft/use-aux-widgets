@@ -29,11 +29,5 @@ export function useWidget(Widget, options) {
   );
   optionsRef.current = options;
 
-  useEffect(() => {
-    return () => {
-      widget.destroy();
-    };
-  }, [ Widget ]);
-
   return widget;
 }
