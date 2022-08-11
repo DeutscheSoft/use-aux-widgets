@@ -11,8 +11,8 @@
   "author": "Arne Goedeke",
   "license": "GPL-2.0-only",
   "peerDependencies": {
-    "react": "^16.8.0  || ^17.0.0",
-    "react-dom": "^16.8.0  || ^17.0.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
     "@deutschesoft/awml": ">=2.2.0"
   }
 }
