@@ -260,7 +260,6 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
       const { auxWidget, bindings, eventSubscriptions, props } = this;
       bindings.dispose();
       eventSubscriptions.clear();
-      auxWidget.element = null;
       auxWidget.destroy();
 
       if (props.widgetRef)
