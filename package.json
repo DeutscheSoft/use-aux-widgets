@@ -13,6 +13,6 @@
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "@deutschesoft/awml": ">=2.2.0"
+    "@deutschesoft/awml": ">=2.2.2"
   }
 }
