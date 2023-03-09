@@ -1,6 +1,6 @@
 {
   "name": "@deutschesoft/use-aux-widgets",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A collection of react hooks for aux-widgets and awml.",
   "main": "index.js",
   "type": "module",
