@@ -165,7 +165,7 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
       this.bindings = bindings;
 
       if (initializeBindingDescriptions(bindingDescriptions, props)) {
-        bindings.update(bindingDescriptions);
+        bindings.update(bindingDescriptions.filter((description) => !!description));
       }
 
       initializeEventSubscriptions(auxWidget, this.eventSubscriptions, props);
