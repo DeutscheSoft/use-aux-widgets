@@ -198,7 +198,7 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
             bindingsChanged = true;
           } else if (name.startsWith('on')) {
             const eventName = name.slice(2).toLowerCase();
-            const unsubscribe = eventSubscriptions(eventName);
+            const unsubscribe = eventSubscriptions.get(eventName);
             eventSubscriptions.delete(eventName);
 
             if (unsubscribe)
@@ -230,7 +230,7 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
             bindingsChanged = true;
           } else if (name.startsWith('on')) {
             const eventName = name.slice(2).toLowerCase();
-            const unsubscribe = eventSubscriptions(eventName);
+            const unsubscribe = eventSubscriptions.get(eventName);
 
             if (unsubscribe)
               unsubscribe();
