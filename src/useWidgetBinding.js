@@ -8,11 +8,11 @@ function compareBindingDescription(a, b) {
   if (!a || !b)
     return false;
 
-  for (let name in a) {
+  for (const name in a) {
     if (a[name] !== b[name]) return false;
   }
 
-  for (let name in b) {
+  for (const name in b) {
     if (a[name] !== b[name]) return false;
   }
 

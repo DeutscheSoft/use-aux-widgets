@@ -1,4 +1,4 @@
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo, useRef } from 'react';
 import { forEachChangedProperty } from './forEachChangedProperty.js';
 
 /**
