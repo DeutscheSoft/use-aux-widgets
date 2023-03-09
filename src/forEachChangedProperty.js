@@ -12,7 +12,7 @@ export function forEachChangedProperty(a, b, removeCb, addCb) {
   for (let name in b) {
     const value = b[name];
     const prevValue = a[name];
-    if (prevValue === value || isNaN(value) && isNaN(prevValue)) continue;
+    if (prevValue === value) continue;
     addCb(name, value, prevValue);
   }
 }
