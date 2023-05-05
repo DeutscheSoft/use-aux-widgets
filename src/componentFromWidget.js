@@ -15,6 +15,8 @@ function createBindingDescription(defaultDescription, value) {
       ...defaultDescription,
       ...value,
     };
+  } else if (value === undefined || value === null) {
+    return null;
   } else {
     throw new TypeError('Unexpected value for binding description. Expected DynamicValue or BindingDescription.');
   }
