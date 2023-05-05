@@ -23,6 +23,6 @@
  */
 export function useBackend<T>(
   name: string,
-  factory: () => T,
+  factory?: () => T,
   retryTimeout?: number | (() => number),
   onError?: (err: Error) => void): [ T|null, () => void ];

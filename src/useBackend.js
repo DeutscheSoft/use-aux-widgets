@@ -177,6 +177,11 @@ export function useBackend(name, factory, retryTimeout, onError) {
   const reconnect = useRef(defaultReconnect);
 
   useEffect(() => {
+    if (!factory) {
+      setBackend(null);
+      return;
+    }
+
     const [ unsubscribe, triggerReconnect ] = subscribeBackend(
       factory,
       (retryCount) => calculateRetryTimeout(retryTimeout.current, retryCount),

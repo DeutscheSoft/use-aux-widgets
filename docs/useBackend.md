@@ -11,7 +11,8 @@ const [ backend, triggerReconnect ] = useBackend(name, factory, retryTimeout,
   this backend will then become available through the `getBackendValue` AWML
   function with the `name + ':'` prefix.
 - **`factory`**_`: () => Backend`_ - A factory function which creates the
-  backend instance.
+  backend instance. If undefined is passed, no backend is being created.
+  This can be used to conditionally connect.
 - **`retryTimeout`**_`: number | (retryCount: number) => number`_ - This
   argument is used to configure the delay between reconnects. If
   the argument is a number, it is used as a timeout in milliseconds with
