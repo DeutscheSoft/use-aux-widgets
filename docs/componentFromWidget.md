@@ -18,6 +18,9 @@ specification follows the
 [IBindingDescription](http://docs.deuso.de/AWMLv2/api/classes.html#ibindingdescription)
 interface of AWML.
 
+Both the `className` and `style` properties of standard HTML elements are
+applied to the `<div>` element used by the widget.
+
 ```ts
 const component = componentFromWidget(widgetImplementation, bindings, options, className);
 ```

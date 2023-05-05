@@ -36,7 +36,7 @@ function initializeEventSubscriptions(auxWidget, eventSubscriptions, props) {
   }
 }
 
-const classListSplit = /( \t\n\r\f)+/;
+const classListSplit = /[ \t\n\r\f]+/;
 
 function updateClassName(element, className, prevClassName, defaultClassNames) {
   const classNames = className.split(classListSplit);
