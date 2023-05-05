@@ -247,6 +247,8 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
             auxWidget.set(name, value);
           } else if (name === 'className') {
             updateClassName(this.elementRef.current, value, prevValue, defaultClassNames);
+          } else if (name === 'style') {
+            // Handled by render()
           } else if (name === 'widgetRef') {
             updateRef(value, auxWidget);
           } else {
@@ -273,7 +275,10 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
     }
 
     render() {
-      return createElement('div', { ref: this.elementRef });
+      return createElement('div', {
+        ref: this.elementRef,
+        style: this.props.style,
+      });
     }
   };
 }
