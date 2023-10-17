@@ -1,4 +1,4 @@
-import { registerBackend, unregisterBackend } from '@deutschesoft/awml/src/index.pure.js'
+import { registerBackend, unregisterBackend } from '@deutschesoft/awml/src/backends.js'
 import { useState, useRef, useEffect } from 'react';
 import { useRefAsCallback } from './useRefAsCallback.js';
 import { useEventHandler } from './useEventHandler.js';
@@ -175,6 +175,9 @@ export function useBackend(name, factory, retryTimeout, onError) {
 
   const [ backend, setBackend ] = useState(null);
   const reconnect = useRef(defaultReconnect);
+
+  if (typeof name !== 'string' || !name)
+    throw new TypeError('expected string.');
 
   useEffect(() => {
     if (!factory) {
