@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { DynamicValue } from '@deutschesoft/awml/src/index.pure';
 
 interface WidgetType<T> extends Function {
   new (options: object): T;
