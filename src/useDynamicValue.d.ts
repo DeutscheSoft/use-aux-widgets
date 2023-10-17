@@ -5,7 +5,7 @@ import { DynamicValue } from '@deutschesoft/awml/src/index.pure';
  * change whenever the dynamic value changes. The returned setter will - when
  * called - call `.set()` on the dynamic value.
  *
- * @param {DynamicValue} dynamicValue
+ * @param {DynamicValue|undefined|null} dynamicValue
  *      The dynamic value to subscribe to.
  *
  * @param [defaultValue]
@@ -18,7 +18,12 @@ import { DynamicValue } from '@deutschesoft/awml/src/index.pure';
  *      ignored.
  */
 export function useDynamicValue<T>(
-    dynamicValue: DynamicValue<T>,
-    defaultValue?: T,
+    dynamicValue: DynamicValue<T> | undefined | null,
+    defaultValue: T,
     replay?: boolean
-  ): [ T, (value: T) => Promise<void> ];
+  ): [ T, (value: T) => Promise<void> | void ];
+
+export function useDynamicValue<T>(
+    dynamicValue: DynamicValue<T> | undefined | null,
+  ): [ T | undefined, (value: T) => Promise<void> ];
+

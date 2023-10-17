@@ -5,11 +5,18 @@ import { useEffect, useState } from 'react';
  * only the current value and no setter.
  */
 export function useDynamicValueReadonly(dynamicValue, defaultValue=undefined, replay=true) {
-  const [ value, setValue ] = useState(dynamicValue.hasValue ? dynamicValue.value : defaultValue);
+  const hasDynamicValue = !!dynamicValue;
+  const [ value, setValue ] = useState(
+    (replay && dynamicValue && dynamicValue.hasValue) ? dynamicValue.value : defaultValue
+  );
 
   useEffect(() => {
-    return dynamicValue.subscribe(setValue, replay);
-  }, [ dynamicValue, replay ]);
+    if (hasDynamicValue) {
+      return dynamicValue.subscribe(setValue, replay);
+    } else {
+      setValue(defaultValue);
+    }
+  }, [ hasDynamicValue, hasDynamicValue ? dynamicValue : defaultValue, hasDynamicValue ? replay : false ]);
 
-  return value;
+  return hasDynamicValue ? value : defaultValue;
 }
