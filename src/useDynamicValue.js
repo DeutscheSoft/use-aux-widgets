@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
+import { useDynamicValueReadonly } from './useDynamicValueReadonly.js';
 
 function dummySetter(value) {
   /*
@@ -26,22 +27,11 @@ function dummySetter(value) {
  *      ignored.
  */
 export function useDynamicValue(dynamicValue, defaultValue=undefined, replay=true) {
-  const hasDynamicValue = !!dynamicValue;
-  const [ value, setValue ] = useState(
-    (replay && dynamicValue && dynamicValue.hasValue) ? dynamicValue.value : defaultValue
-  );
+  const value = useDynamicValueReadonly(dynamicValue, defaultValue, replay);
 
   const setter = useCallback(dynamicValue ? (value) => {
     return dynamicValue.set(value);
   } : dummySetter, [ dynamicValue ]);
-
-  useEffect(() => {
-    if (hasDynamicValue) {
-      return dynamicValue.subscribe(setValue, replay);
-    } else {
-      setValue(defaultValue);
-    }
-  }, [ hasDynamicValue, hasDynamicValue ? dynamicValue : defaultValue, hasDynamicValue ? replay : false ]);
 
   return [ value, setter ];
 }
