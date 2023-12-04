@@ -11,8 +11,8 @@ interface WidgetType<T> extends Function {
  *
  * @param {Function} Widget
  *      The widget implementation to create widgets from.
- * @param {Object} options
+ * @param {Object[]} options
  *      The options of the widget.
  */
-export function useWidgets<T>(Widget: WidgetType<T>, options: object[]): T[];
+export function useWidgets<T>(Widget: WidgetType<T>, options: Record<string,unknown>[]): T[];
 
