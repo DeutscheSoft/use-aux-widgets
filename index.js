@@ -10,5 +10,6 @@ export { useWidgets } from './src/useWidgets.js';
 export { useWidgetBinding } from './src/useWidgetBinding.js';
 export { useWidgetEvent } from './src/useWidgetEvent.js';
 export { useWidgetEvents } from './src/useWidgetEvents.js';
+export { useWidgetsEvents } from './src/useWidgetsEvents.js';
 export { useWidgetOption } from './src/useWidgetOption.js';
 export { useWidgetInteraction } from './src/useWidgetInteraction.js';

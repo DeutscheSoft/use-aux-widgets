@@ -33,6 +33,8 @@ A collection of hooks for integrating
   events of a widget programmatically.
 - [`useWidgetEvents`](./docs/useWidgetEvents.md) &mdash; A hook for subscribing to
   a list of events of a widget.
+- [`useWidgetsEvents`](./docs/useWidgetsEvents.md) &mdash; A hook for subscribing to
+  a list of events in a list of widgets.
 - [`useWidgetInteraction`](./docs/useWidgetInteraction.md) &mdash; Creates a
   state which tracks user interaction with a widget.
 - [`useWidgetOption`](./docs/useWidgetOption.md) &mdash; Creates a state which

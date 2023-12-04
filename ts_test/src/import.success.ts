@@ -11,6 +11,7 @@ import {
     useWidgetBinding,
     useWidgetEvent,
     useWidgetEvents,
+    useWidgetsEvents,
     useWidgetOption,
     useWidgetInteraction
   } from '../../index';
