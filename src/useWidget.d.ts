@@ -14,4 +14,6 @@ interface WidgetType<T> extends Function {
  * @param {Object} options
  *      The options of the widget.
  */
-export function useWidget<T>(Widget: WidgetType<T>, options: object): T;
+export function useWidget<T>(Widget: WidgetType<T>, options: Record<string,unknown>): T;
+export function useWidget<T>(Widget: WidgetType<T>): null;
+export function useWidget(Widget: null | undefined, options?: Record<string,unknown> | null): null;

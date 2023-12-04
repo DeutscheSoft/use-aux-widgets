@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import { forEachChangedProperty } from './forEachChangedProperty.js';
 
 /**
@@ -14,20 +14,34 @@ import { forEachChangedProperty } from './forEachChangedProperty.js';
  *      The options of the widget.
  */
 export function useWidget(Widget, options) {
-  const optionsRef = useRef(options);
-  const widget = useMemo(() => new Widget(optionsRef.current), [ Widget ]);
+  const optionsRef = useRef(null);
+  const widget = useMemo(() => {
+    if (!Widget || !options)
+      return null;
+    optionsRef.current = options;
+    return new Widget(options);
+  }, [ Widget, !!options ]);
 
-  forEachChangedProperty(
-    optionsRef.current,
-    options,
-    (name) => {
-      widget.reset(name);
-    },
-    (name, value, prevValue) => {
-      widget.set(name, value);
-    }
-  );
-  optionsRef.current = options;
+  if (widget) {
+    forEachChangedProperty(
+      optionsRef.current,
+      options,
+      (name) => {
+        widget.reset(name);
+      },
+      (name, value, prevValue) => {
+        widget.set(name, value);
+      }
+    );
+    optionsRef.current = options;
+  }
+
+  useEffect(() => {
+    if (!widget) return;
+    return () => {
+      widget.destroy();
+    };
+  }, [ widget ]);
 
   return widget;
 }
