@@ -22,6 +22,7 @@ export function useWidgetEvent(widget, eventName, callback) {
   callback = useEventHandler(callback);
 
   useEffect(() => {
+    if (!eventName) return;
     if (!widget || widget.isDestructed()) return;
     return widget.subscribe(eventName, callback);
   }, [ widget, eventName, callback ]);
