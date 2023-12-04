@@ -10,6 +10,7 @@ import {
     useWidgets,
     useWidgetBinding,
     useWidgetEvent,
+    useWidgetEvents,
     useWidgetOption,
     useWidgetInteraction
   } from '../../index';

@@ -31,6 +31,8 @@ A collection of hooks for integrating
   two-way bindings with widgets programmatically.
 - [`useWidgetEvent`](./docs/useWidgetEvent.md) &mdash; A hook for subscribing to
   events of a widget programmatically.
+- [`useWidgetEvents`](./docs/useWidgetEvents.md) &mdash; A hook for subscribing to
+  a list of events of a widget.
 - [`useWidgetInteraction`](./docs/useWidgetInteraction.md) &mdash; Creates a
   state which tracks user interaction with a widget.
 - [`useWidgetOption`](./docs/useWidgetOption.md) &mdash; Creates a state which

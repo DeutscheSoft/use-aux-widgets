@@ -9,5 +9,6 @@ export { useWidget } from './src/useWidget';
 export { useWidgets } from './src/useWidgets';
 export { useWidgetBinding } from './src/useWidgetBinding';
 export { useWidgetEvent } from './src/useWidgetEvent';
+export { useWidgetEvents } from './src/useWidgetEvents';
 export { useWidgetOption } from './src/useWidgetOption';
 export { useWidgetInteraction } from './src/useWidgetInteraction';
