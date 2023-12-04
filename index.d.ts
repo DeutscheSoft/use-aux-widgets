@@ -8,6 +8,7 @@ export { useRefAsCallback } from './src/useRefAsCallback';
 export { useWidget } from './src/useWidget';
 export { useWidgets } from './src/useWidgets';
 export { useWidgetBinding } from './src/useWidgetBinding';
+export { useWidgetsBindings } from './src/useWidgetsBindings';
 export { useWidgetEvent } from './src/useWidgetEvent';
 export { useWidgetEvents } from './src/useWidgetEvents';
 export { useWidgetsEvents } from './src/useWidgetsEvents';

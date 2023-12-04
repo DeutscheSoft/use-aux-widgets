@@ -29,6 +29,8 @@ A collection of hooks for integrating
   programmatically.
 - [`useWidgetBinding`](./docs/useWidgetBinding.md) &mdash; A hook for creating
   two-way bindings with widgets programmatically.
+- [`useWidgetsBindings`](./docs/useWidgetsBindings.md) &mdash; A hook for creating
+  two-way bindings on a list of widgets.
 - [`useWidgetEvent`](./docs/useWidgetEvent.md) &mdash; A hook for subscribing to
   events of a widget programmatically.
 - [`useWidgetEvents`](./docs/useWidgetEvents.md) &mdash; A hook for subscribing to

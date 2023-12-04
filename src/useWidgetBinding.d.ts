@@ -9,6 +9,6 @@ import { IBindingDescription } from '@deutschesoft/awml/src/bindings';
  *      The description of the binding(s) to create.
  */
 export function useWidgetBinding(
-  widget,
+  widget: object,
   bindingDescription: IBindingDescription | IBindingDescription[]
 ): void;

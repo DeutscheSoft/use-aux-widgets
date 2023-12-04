@@ -9,6 +9,7 @@ import {
     useWidget,
     useWidgets,
     useWidgetBinding,
+    useWidgetsBindings,
     useWidgetEvent,
     useWidgetEvents,
     useWidgetsEvents,
