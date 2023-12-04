@@ -10,7 +10,7 @@ function subscribeBackend(factory, calculateRetryTimeout, onError, callback) {
   let retryCount = 0;
   let timeoutId = -1;
   let connecting = true;
-  let connect;
+  let connect = null;
 
   const retry = () => {
     if (!active) return;
@@ -54,6 +54,7 @@ function subscribeBackend(factory, calculateRetryTimeout, onError, callback) {
   connect = () => {
     try {
       const onBackend = (_backend) => {
+        connecting = false;
         backend = _backend;
 
         backend.on('error', (error) => {
