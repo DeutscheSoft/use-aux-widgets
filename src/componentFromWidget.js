@@ -23,7 +23,7 @@ function createBindingDescription(defaultDescription, value) {
 }
 
 function initializeEventSubscriptions(auxWidget, eventSubscriptions, props) {
-  for (let name in props) {
+  for (const name in props) {
     if (!name.startsWith('on')) continue;
     const value = props[name];
     const eventName = name.slice(2).toLowerCase();
@@ -120,7 +120,7 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
   function optionsFromProps(props) {
     const result = Object.assign({ }, defaultOptions);
 
-    for (let key in props) {
+    for (const key in props) {
       if (optionTypes[key]) {
         result[key] = props[key];
       }
