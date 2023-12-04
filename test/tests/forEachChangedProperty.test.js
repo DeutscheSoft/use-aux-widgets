@@ -1,5 +1,5 @@
 import { forEachChangedProperty } from './src/forEachChangedProperty.js';
-import { deepStrictEqual, strictEqual } from 'node:assert';
+import { deepStrictEqual } from 'node:assert';
 import test from 'node:test';
 
 test('forEachChangedProperty', () => {

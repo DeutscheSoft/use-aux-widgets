@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { useBackend } from './src/useBackend.js';
 import { strictEqual, throws } from 'node:assert';
 import test from 'node:test';
