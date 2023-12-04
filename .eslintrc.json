@@ -1,0 +1,22 @@
+{
+  "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+      }
+  },
+  "ignorePatterns": ["test/tests/src/*.js"],
+  "rules": {
+      "semi": "error"
+  },
+  "extends": "eslint:recommended",
+  "env": {
+      "browser": true,
+      "es2017": true
+  },
+  "rules": {
+    "prefer-const": "error",
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+    "no-var": "error"
+  }
+}
