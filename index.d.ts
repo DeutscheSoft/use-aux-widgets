@@ -14,3 +14,4 @@ export { useWidgetEvents } from './src/useWidgetEvents';
 export { useWidgetsEvents } from './src/useWidgetsEvents';
 export { useWidgetOption } from './src/useWidgetOption';
 export { useWidgetInteraction } from './src/useWidgetInteraction';
+export { useWidgetsWithBindingsAndEvents } from './src/useWidgetsWithBindingsAndEvents';

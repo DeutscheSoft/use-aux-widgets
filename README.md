@@ -43,6 +43,9 @@ A collection of hooks for integrating
   synchronizes with the option of a widget.
 - [`useWidgets`](./docs/useWidgets.md) &mdash; A hook for creating a list of
   widgets programmatically.
+- [`useWidgetsWithBindingsAndEvents`](./docs/useWidgetsWithBindingsAndEvents.md) &mdash; A convenience hook which
+  combines [`useWidgets`](./docs/useWidgets.md), [`useWidgetsEvents`](./docs/useWidgetsEvents.md) and
+  [`useWidgetsBindings`](./docs/useWidgetsBindings.md).
 
 ## License
 
