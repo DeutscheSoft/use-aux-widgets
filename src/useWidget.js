@@ -36,12 +36,5 @@ export function useWidget(Widget, options) {
     optionsRef.current = options;
   }
 
-  useEffect(() => {
-    if (!widget) return;
-    return () => {
-      widget.destroy();
-    };
-  }, [ widget ]);
-
   return widget;
 }
