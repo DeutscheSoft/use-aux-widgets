@@ -14,6 +14,7 @@ A collection of hooks for integrating
   component from an aux widget.
 - [`useBackend`](./docs/useBackend.md) &mdash; Creates a backend which
   automatically reconnects.
+- [`useBackends`](./docs/useBackends.md) &mdash; Creates a list of backends.
 - [`useDebouncedState`](./docs/useDebouncedState.md) &mdash; Creates a state
   which is debounced, i.e. it will change at most once during a given time
   interval.

@@ -1,5 +1,6 @@
 export { componentFromWidget } from './src/componentFromWidget.js';
 export { useBackend } from './src/useBackend.js';
+export { useBackends } from './src/useBackends.js';
 export { useDebouncedState } from './src/useDebouncedState.js';
 export { useDynamicValue } from './src/useDynamicValue.js';
 export { useDynamicValueReadonly } from './src/useDynamicValueReadonly.js';
