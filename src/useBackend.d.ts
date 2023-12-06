@@ -21,8 +21,8 @@
  *      Returns an array which contains the backend (or null when not connected)
  *      and a callback which can be used to trigger a reconnect.
  */
-export function useBackend<T>(
+export function useBackend<T extends object>(
   name: string,
-  factory?: () => T,
-  retryTimeout?: number | (() => number),
+  factory?: (() => Promise<T>) | (() => T),
+  retryTimeout?: number | ((failureCount) => number),
   onError?: (err: Error) => void): [ T|null, () => void ];
