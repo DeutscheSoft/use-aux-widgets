@@ -43,6 +43,15 @@ test('useWidgetEvent', () => {
     w.emit('foo');
     strictEqual(called, 3);
 
+    callback = function() {
+      strictEqual(this, w);
+      called++;
+    };
+    rerender();
+    w = result.current;
+    w.emit('foo');
+    strictEqual(called, 4);
+
     unmount();
   }
 });

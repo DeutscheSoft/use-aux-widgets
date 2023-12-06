@@ -44,6 +44,16 @@ test('useWidgetEvents', () => {
     result.current.emit('foo');
     strictEqual(called, 3);
 
+    events = {
+      foo: function () {
+        strictEqual(this, result.current);
+        called++;
+      },
+    };
+    rerender();
+    result.current.emit('foo');
+    strictEqual(called, 4);
+
     unmount();
   }
 });

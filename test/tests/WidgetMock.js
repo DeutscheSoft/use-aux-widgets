@@ -49,7 +49,7 @@ export class WidgetMock {
       return;
 
     handlers.forEach((cb) => {
-      cb(...args);
+      cb.apply(this, args);
     });
   }
 
