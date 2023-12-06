@@ -20,5 +20,5 @@ export function useWidgetsWithBindingsAndEvents<T>(
   Widget: WidgetType<T>, 
   options: Record<string,unknown>[],
   bindingDescriptions?: (IBindingDescription | IBindingDescription[])[],
-  events?: (Record<string, (...args: any[]) => any> | null)[]
+  events?: (Record<string, Function> | null)[]
 ): T[];

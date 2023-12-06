@@ -16,5 +16,5 @@
 export function useWidgetEvent(
     widget: object,
     eventName?: string,
-    callback?: (...args: unknown[]) => unknown
+    callback?: Function
   ): void;

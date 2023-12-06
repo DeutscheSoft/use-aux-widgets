@@ -10,5 +10,5 @@
  */
 export function useWidgetEvents(
     widget,
-    events: Record<string, (...args: any[]) => any>
+    events: Record<string, Function>
   ): void;

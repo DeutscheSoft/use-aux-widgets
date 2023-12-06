@@ -13,5 +13,5 @@
  */
 export function useWidgetsEvents(
     widgets: object[],
-    events: (Record<string, (...args: any[]) => any> | null)[]
+    events: (Record<string, Function> | null)[]
   ): void;
