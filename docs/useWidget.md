@@ -12,4 +12,4 @@ const widget = useWidget(widgetImplementation, option);
 
 - **`widgetImplementation`**_`: typeof Widget`_ - A widget implementation to
   create an instance for.
-- **`options`**_`{ [name: string]: any }`_ - The options of the widget.
+- **`options`**_`Record<string,unknown>`_ - The options of the widget.
