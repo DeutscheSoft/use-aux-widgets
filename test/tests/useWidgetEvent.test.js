@@ -12,7 +12,7 @@ test('useWidgetEvent', () => {
     const Widget = WidgetMock;
     let eventName = 'foo';
     let callback = () => { called++; };
-    const { result, rerender } = renderHook(() => {
+    const { result, rerender, unmount } = renderHook(() => {
       const widget = useWidget(Widget, options);
       useWidgetEvent(widget, eventName, callback);
       return widget;
@@ -42,5 +42,7 @@ test('useWidgetEvent', () => {
     w = result.current;
     w.emit('foo');
     strictEqual(called, 3);
+
+    unmount();
   }
 });

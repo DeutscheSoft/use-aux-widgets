@@ -11,7 +11,7 @@ test('useWidgets', () => {
       { bar: 1 },
     ];
     const Widget = WidgetMock;
-    const { result, rerender } = renderHook(() => useWidgets(Widget, options));
+    const { result, rerender, unmount } = renderHook(() => useWidgets(Widget, options));
 
     let a = result.current;
     assert(Array.isArray(a));
@@ -73,5 +73,18 @@ test('useWidgets', () => {
     rerender();
     deepEqual(result.current, []);
     a.forEach((w) => assert(w.isDestructed()));
+
+    unmount();
+  }
+
+  {
+    const options = [
+      { foo: 1 },
+      { bar: 1 },
+    ];
+    const Widget = WidgetMock;
+    const { unmount } = renderHook(() => useWidgets(Widget, options));
+
+    unmount();
   }
 });

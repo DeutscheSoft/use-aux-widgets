@@ -9,8 +9,9 @@ test('useBackend', () => {
   });
 
   {
-    const { result } = renderHook(() => useBackend('foobar'));
+    const { result, unmount } = renderHook(() => useBackend('foobar'));
     strictEqual(result.current[0], null);
     strictEqual(typeof result.current[1], 'function');
+    unmount();
   }
 });

@@ -8,7 +8,7 @@ test('useWidget', () => {
   {
     let options = { foo: 1 };
     let Widget = WidgetMock;
-    const { result, rerender } = renderHook(() => useWidget(Widget, options));
+    const { result, rerender, unmount } = renderHook(() => useWidget(Widget, options));
 
     let w = result.current;
     strictEqual(typeof w, 'object');
@@ -57,5 +57,7 @@ test('useWidget', () => {
     w = result.current;
     strictEqual(typeof w, 'object');
     strictEqual(w.options.foo, 23);
+
+    unmount();
   }
 });

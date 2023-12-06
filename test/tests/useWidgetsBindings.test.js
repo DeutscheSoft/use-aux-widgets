@@ -15,7 +15,7 @@ test('useWidgetsBindings', () => {
       { name: 'foo', backendValue, },
       { name: 'bar', backendValue, }
     ];
-    const { result, rerender } = renderHook(() => {
+    const { result, rerender, unmount } = renderHook(() => {
       const widgets = useWidgets(Widget, options);
       useWidgetsBindings(widgets, bindings);
       return widgets;
@@ -53,5 +53,7 @@ test('useWidgetsBindings', () => {
     rerender();
     deepEqual(result.current[0].options, { foo: 23 });
     deepEqual(result.current[1].options, { bar: 23, foo: 4 });
+
+    unmount();
   }
 });

@@ -16,7 +16,7 @@ test('useWidgetEvents', () => {
     let events = {
       foo: callback,
     };
-    const { result, rerender } = renderHook(() => {
+    const { result, rerender, unmount } = renderHook(() => {
       const widget = useWidget(Widget, options);
       useWidgetEvents(widget, events);
       return widget;
@@ -43,5 +43,7 @@ test('useWidgetEvents', () => {
     rerender();
     result.current.emit('foo');
     strictEqual(called, 3);
+
+    unmount();
   }
 });

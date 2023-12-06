@@ -8,7 +8,7 @@ import test from 'node:test';
 test('useDynamicValueReadonly', () => {
   {
     const dv = DynamicValue.fromConstant(42);
-    const { result } = renderHook(() => useDynamicValueReadonly(dv));
+    const { result, unmount } = renderHook(() => useDynamicValueReadonly(dv));
 
     strictEqual(result.current, 42);
 
@@ -17,12 +17,13 @@ test('useDynamicValueReadonly', () => {
     });
 
     strictEqual(23, result.current);
+    unmount();
   }
 
   {
     const dv1 = new DynamicValue();
     const dv = map(dv1, (val) => val);
-    const { result } = renderHook(() => useDynamicValueReadonly(dv));
+    const { result, unmount } = renderHook(() => useDynamicValueReadonly(dv));
 
     strictEqual(result.current, undefined);
 
@@ -31,19 +32,22 @@ test('useDynamicValueReadonly', () => {
     });
 
     strictEqual(result.current, 42);
+    unmount();
   }
 
   {
     const dv = null;
-    const { result } = renderHook(() => useDynamicValueReadonly(dv, 42));
+    const { result, unmount } = renderHook(() => useDynamicValueReadonly(dv, 42));
 
     strictEqual(result.current, 42);
+    unmount();
   }
 
   {
     const dv = null;
-    const { result } = renderHook(() => useDynamicValueReadonly(dv));
+    const { result, unmount } = renderHook(() => useDynamicValueReadonly(dv));
 
     strictEqual(result.current, undefined);
+    unmount();
   }
 });

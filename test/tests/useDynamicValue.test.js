@@ -7,7 +7,7 @@ import test from 'node:test';
 test('useDynamicValue', () => {
   {
     const dv = DynamicValue.fromConstant(42);
-    const { result } = renderHook(() => useDynamicValue(dv));
+    const { result, unmount } = renderHook(() => useDynamicValue(dv));
 
     strictEqual(result.current[0], 42);
 
@@ -16,21 +16,24 @@ test('useDynamicValue', () => {
     });
 
     strictEqual(23, result.current[0]);
+    unmount();
   }
 
   {
     const dv = null;
-    const { result } = renderHook(() => useDynamicValue(dv, 42));
+    const { result, unmount } = renderHook(() => useDynamicValue(dv, 42));
 
     strictEqual(result.current[0], 42);
     throws(() => result.current[1](23));
+    unmount();
   }
 
   {
     const dv = null;
-    const { result } = renderHook(() => useDynamicValue(dv));
+    const { result, unmount } = renderHook(() => useDynamicValue(dv));
 
     strictEqual(result.current[0], undefined);
     throws(() => result.current[1](23));
+    unmount();
   }
 });

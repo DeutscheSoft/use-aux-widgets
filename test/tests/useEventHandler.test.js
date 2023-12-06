@@ -5,7 +5,7 @@ import test from 'node:test';
 
 test('useEventHandler', () => {
   let called = false;
-  const { result, rerender } = renderHook(() => useEventHandler(() => {
+  const { result, rerender, unmount } = renderHook(() => useEventHandler(() => {
     called = true;
   }));
 
@@ -23,4 +23,5 @@ test('useEventHandler', () => {
   });
 
   strictEqual(called, true);
+  unmount();
 });
