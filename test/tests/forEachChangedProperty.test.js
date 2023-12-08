@@ -71,5 +71,29 @@ test('forEachChangedProperty', () => {
     { name: 'foo', value: 23 }
   ]);
   deepStrictEqual(added, [ ]);
+  removed.length = 0;
+
+  // Check that both from and to can be missing
+  forEachChangedProperty(
+    { foo: 23 },
+    null,
+    removeCb,
+    addCb);
+  deepStrictEqual(removed, [
+    { name: 'foo', value: 23 }
+  ]);
+  deepStrictEqual(added, []);
+  removed.length = 0;
+
+  forEachChangedProperty(
+    null,
+    { foo: 23 },
+    removeCb,
+    addCb);
+  deepStrictEqual(added, [
+    { name: 'foo', value: 23, previousValue: undefined }
+  ]);
+  deepStrictEqual(removed, []);
+  removed.length = 0;
 
 });

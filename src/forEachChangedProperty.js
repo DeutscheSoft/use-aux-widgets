@@ -7,7 +7,7 @@ export function forEachChangedProperty(a, b, removeCb, addCb) {
   if (a === b) return;
   if (a)
     for (const name in a) {
-      if (hasOwnProperty(b, name)) continue;
+      if (b && hasOwnProperty(b, name)) continue;
       removeCb(name, a[name]);
     }
 
