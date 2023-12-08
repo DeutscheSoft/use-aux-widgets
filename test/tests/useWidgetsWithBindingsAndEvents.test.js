@@ -1,6 +1,5 @@
 import renderHook from './renderHook.js';
-import { useWidgets } from './src/useWidgets.js';
-import { useWidgetsBindings } from './src/useWidgetsBindings.js';
+import { useWidgetsWithBindingsAndEvents } from './src/useWidgetsWithBindingsAndEvents.js';
 import assert, { deepEqual, strictEqual } from 'node:assert';
 import { WidgetMock } from './WidgetMock.js';
 import { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
@@ -16,9 +15,7 @@ test('useWidgetsBindings', () => {
       { name: 'bar', backendValue, }
     ];
     const { result, rerender, unmount } = renderHook(() => {
-      const widgets = useWidgets(Widget, options);
-      useWidgetsBindings(widgets, bindings);
-      return widgets;
+      return useWidgetsWithBindingsAndEvents(Widget, options, bindings);
     });
 
     assert(Array.isArray(result.current));

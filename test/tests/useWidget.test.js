@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import renderHook from './renderHook.js';
 import { useWidget } from './src/useWidget.js';
 import { strictEqual } from 'node:assert';
 import { WidgetMock } from './WidgetMock.js';

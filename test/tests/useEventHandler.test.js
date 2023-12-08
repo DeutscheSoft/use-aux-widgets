@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import renderHook from './renderHook.js';
 import { useEventHandler } from './src/useEventHandler.js';
 import { strictEqual } from 'node:assert';
 import test from 'node:test';
@@ -18,9 +18,7 @@ test('useEventHandler', () => {
 
   strictEqual(lastCb, result.current);
 
-  act(() => {
-    result.current();
-  });
+  result.current();
 
   strictEqual(called, true);
   unmount();

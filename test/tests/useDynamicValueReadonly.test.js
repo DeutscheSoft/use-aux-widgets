@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import renderHook from './renderHook.js';
 import { useDynamicValueReadonly } from './src/useDynamicValueReadonly.js';
 import { strictEqual } from 'node:assert';
 import { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
@@ -8,13 +8,12 @@ import test from 'node:test';
 test('useDynamicValueReadonly', () => {
   {
     const dv = DynamicValue.fromConstant(42);
-    const { result, unmount } = renderHook(() => useDynamicValueReadonly(dv));
+    const { result, rerender, unmount } = renderHook(() => useDynamicValueReadonly(dv));
 
     strictEqual(result.current, 42);
 
-    act(() => {
-      dv.set(23);
-    });
+    dv.set(23);
+    rerender();
 
     strictEqual(23, result.current);
     unmount();
@@ -23,13 +22,12 @@ test('useDynamicValueReadonly', () => {
   {
     const dv1 = new DynamicValue();
     const dv = map(dv1, (val) => val);
-    const { result, unmount } = renderHook(() => useDynamicValueReadonly(dv));
+    const { result, unmount, rerender } = renderHook(() => useDynamicValueReadonly(dv));
 
     strictEqual(result.current, undefined);
 
-    act(() => { 
-      dv1.set(42);
-    });
+    dv1.set(42);
+    rerender();
 
     strictEqual(result.current, 42);
     unmount();
