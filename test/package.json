@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "rm tests/src/* && cp ../src/* tests/src/ && node --test tests/*.test.js"
+    "test": "rm tests/src/* && cp ../src/* tests/src/ && node --test tests/*.test.js",
+    "test:only": "rm tests/src/* && cp ../src/* tests/src/ && node --test-only --test tests/*.test.js"
   },
   "keywords": [],
   "author": "",
