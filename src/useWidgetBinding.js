@@ -1,6 +1,7 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { Bindings } from '@deutschesoft/awml/src/bindings.js';
 import { compareBindingDescriptions } from './compareBindingDescriptions.js';
+import { useMemoWithCleanup } from './useMemoWithCleanup.js';
 
 function useBindingDescription(bindingDescription) {
   const ref = useRef(null);
@@ -13,11 +14,15 @@ function useBindingDescription(bindingDescription) {
 }
 
 function useBindingsForWidget(widget) {
-  return useMemo(() => {
+  return useMemoWithCleanup(() => {
     if (!widget || widget.isDestructed())
-      return null;
+      return [ null, null ];
 
-    return new Bindings(widget, widget.element);
+    const bindings = new Bindings(widget, widget.element);
+    return [
+      bindings,
+      () => bindings.dispose()
+    ];
   }, [ widget ]);
 }
 
@@ -39,11 +44,4 @@ export function useWidgetBinding(widget, bindingDescription) {
     if (bindings && widget && !widget.isDestructed())
       bindings.update(bindingDescription);
   }, [ widget, bindings, bindingDescription ]);
-
-  useEffect(() => {
-    if (bindings)
-      return () => {
-        bindings.dispose();
-      };
-  }, [ bindings ]);
 }
