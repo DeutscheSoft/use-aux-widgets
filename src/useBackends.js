@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { forEachChangedProperty } from './forEachChangedProperty.js';
 import { subscribeBackend, defaultReconnect, defaultErrorHandler, calculateRetryTimeout } from './subscribeBackend.js';
+import { useMemoWithCleanup } from './useMemoWithCleanup.js';
 
 function compareBackendOptions(a, b) {
   if (a === b || !a && !b) return true;
@@ -105,15 +106,20 @@ class BackendsManager {
 
 export function useBackends(options) {
   const [ results, setResults ] = useState({});
-  const manager = useMemo(() => new BackendsManager(setResults), []);
+
+  const manager = useMemoWithCleanup(() => {
+    const manager = new BackendsManager(setResults);
+
+    return [
+      manager,
+      () => manager.dispose()
+    ];
+  }, [ ]);
 
   useEffect(() => {
-    manager.update(options);
+    if (manager)
+      manager.update(options);
   }, [ manager, options ]);
-
-  useEffect(() => {
-    return () => manager.dispose();
-  }, [ manager ]);
 
   return results;
 }
