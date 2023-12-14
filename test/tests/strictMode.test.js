@@ -1,7 +1,6 @@
 import renderHook from './renderHook.js';
 import { useEffect } from 'react';
-import { useBackend } from './src/useBackend.js';
-import { strictEqual, throws } from 'node:assert';
+import { strictEqual } from 'node:assert';
 import test from 'node:test';
 
 test('StrictMode', () => {
@@ -15,14 +14,18 @@ test('StrictMode', () => {
       };
     }, []);
   };
-  const { result, rerender, unmount } = renderHook(hook);
+  const { rerender, unmount } = renderHook(hook);
 
   strictEqual(called, 2);
   strictEqual(cleaned, 1);
 
   rerender();
 
+  strictEqual(called, 2);
+  strictEqual(cleaned, 1);
+
   unmount();
 
+  strictEqual(called, 2);
   strictEqual(cleaned, 2);
 });
