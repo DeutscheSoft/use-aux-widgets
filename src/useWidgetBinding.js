@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Bindings } from '@deutschesoft/awml/src/bindings.js';
 import { compareBindingDescriptions } from './compareBindingDescriptions.js';
 import { useMemoWithCleanup } from './useMemoWithCleanup.js';

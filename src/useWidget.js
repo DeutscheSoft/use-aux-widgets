@@ -1,5 +1,6 @@
-import { useMemo, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { forEachChangedProperty } from './forEachChangedProperty.js';
+import { useMemoWithCleanup } from './useMemoWithCleanup.js';
 
 /**
  * Creates a widget with the given options. The widget will be stored
@@ -15,14 +16,18 @@ import { forEachChangedProperty } from './forEachChangedProperty.js';
  */
 export function useWidget(Widget, options) {
   const optionsRef = useRef(null);
-  const widget = useMemo(() => {
+  const widget = useMemoWithCleanup(() => {
     if (!Widget || !options)
-      return null;
+      return [ null, null ];
     optionsRef.current = options;
-    return new Widget(options);
+    const widget = new Widget(options);
+    return [
+      widget,
+      () => widget.destroy(),
+    ];
   }, [ Widget, !!options ]);
 
-  if (widget) {
+  if (widget && !widget.isDestructed()) {
     forEachChangedProperty(
       optionsRef.current,
       options,
