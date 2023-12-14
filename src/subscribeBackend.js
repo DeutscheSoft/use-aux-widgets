@@ -1,128 +1,163 @@
+import { registerBackend, unregisterBackend } from '@deutschesoft/awml/src/backends.js'
 
-export function subscribeBackend(factory, calculateRetryTimeout, onError, callback) {
+function waitForEvents(backend, eventNames, continuation) {
+  const callbacks = eventNames.map((eventName, index) => {
+    return (...args) => {
+      eventNames.forEach((eventName, i) => {
+        backend.off(eventName, callbacks[i]);
+      });
+      continuation(eventName, args);
+    };
+  });
+  callbacks.forEach((callback, i) => {
+    backend.on(eventNames[i], callback);
+  });
+}
+
+function waitForOpen(backend, continuation) {
+  if (backend.isOpen) {
+    continuation('open', backend);
+  } else if (backend.isInit) {
+    waitForEvents(backend, [ 'open', 'error', 'close' ], (eventName, args) => {
+      switch (eventName) {
+      case 'open':
+        continuation('open', backend);
+        break;
+      case 'error':
+        continuation('error', args[0]);
+        break;
+      case 'close':
+        continuation('close');
+        break;
+      }
+    });
+  } else {
+    continuation('error', new Error('Backend closed after create.'));
+  }
+}
+
+function waitForClose(backend, continuation) {
+  waitForEvents(backend, [ 'open', 'error', 'close' ], (eventName, args) => {
+    switch (eventName) {
+    case 'error':
+      continuation('error', args[0]);
+      break;
+    case 'close':
+      continuation('close');
+      break;
+    }
+  });
+}
+
+function safeCall(callback, ...args) {
+  try {
+    callback(...args);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function connect(name, factory, continuation) {
+  try {
+    const task = factory();
+
+    if (task.then) {
+      task.then((backend) => {
+        waitForOpen(backend, continuation);
+      }).catch((err) => {
+        continuation('error', err);
+      });
+    } else {
+      const backend = task;
+      waitForOpen(backend, continuation);
+    }
+  } catch (err) {
+    continuation('error', err);
+  }
+}
+
+export function subscribeBackend(name, factory, calculateRetryTimeout, onError, callback) {
   let active = true;
   let backend = null;
   let retryCount = 0;
-  let timeoutId = -1;
-  let connecting = true;
-  let connect = null;
+  let retryId;
+
+  const clearRetry = () => {
+    if (retryId !== undefined) {
+      clearTimeout(retryId);
+      retryId = undefined;
+    }
+  };
+
+  const triggerRetryAt = (timeout) => {
+    clearRetry();
+    if (!active) return;
+    retryId = setTimeout(() => {
+      retry();
+    }, timeout);
+  };
+
+  const triggerRetry = () => {
+    const timeout = calculateRetryTimeout(retryCount);
+    triggerRetryAt(timeout);
+  };
 
   const retry = () => {
-    if (!active) return;
+    connect(name, factory, (eventName, result) => {
+      if (eventName === 'open') {
+        backend = result;
+        if (!active) {
+          backend.close();
+          return;
+        }
 
-    callback(backend = null);
+        registerBackend(name, backend);
+        safeCall(callback, backend);
 
-    const timeout = calculateRetryTimeout(retryCount++);
+        retryCount = 0;
 
-    if (timeout > 0) {
-      timeoutId = setTimeout(
-        () => {
-          timeoutId = -1;
-          if (!active) return;
-          connect();  
-        },
-        timeout);
-    } else {
-      connect();
-    }
-  };
-
-  const onOpen = () => {
-    retryCount = 0;
-
-    if (!active) {
-      backend.close();
-      backend = null;
-    }
-
-    backend.on('close', () => {
-      if (!active)
-        return;
-
-      retryCount = 0;
-      retry();
-    });
-
-    callback(backend);
-  };
-
-  connect = () => {
-    try {
-      const onBackend = (_backend) => {
-        connecting = false;
-        backend = _backend;
-
-        backend.on('error', (error) => {
-          retry();
-          onError(error);
-        });
-
-        if (_backend.isOpen) {
-          onOpen(_backend);
-        } else if (_backend.isInit) {
-          if (!active) {
-            _backend.close();
-          } else {
-            _backend.on('open', onOpen);
+        waitForClose(backend, (eventName, result) => {
+          unregisterBackend(name, backend);
+          backend = null;
+          if (eventName === 'error') {
+            safeCall(onError, result);
           }
-        } else {
-          if (active)
-            retry();
-        }
-      };
-
-      const task = factory();
-
-      if (typeof task !== 'object') {
-        retry();
+          safeCall(callback, null);
+          triggerRetry();
+        });
       } else {
-        if (typeof task.then === 'function') {
-          task.then(
-            onBackend,
-            (error) => {
-              onError(error);     
-              retry();
-            }
-          );
-        } else {
-          onBackend(task); 
+        if (!active) return;
+        retryCount++;
+
+        if (eventName === 'error') {
+          const error = result;
+          safeCall(onError, error);
         }
+
+        triggerRetry();
       }
-    } catch (error) {
-      if (!active) return;
-      onError(error);
-      retry();
-    }
+    });
   };
 
   const unsubscribe = () => {
     if (!active) return;
     active = false;
 
+    clearRetry();
     if (backend) {
       backend.close(); 
-      backend = null;
     }
-
-    if (timeoutId !== -1)
-      clearTimeout(timeoutId);
   };
 
   const triggerReconnect = () => {
     if (!active) return;
 
-    if (backend && backend.isOpen) return;
-    if (connecting) return;
+    if (backend) return;
 
-    if (timeoutId !== -1) {
-      clearTimeout(timeoutId);
-      timeoutId = -1;
-    }
-
-    connect();
+    triggerRetryAt(0);
   };
 
-  connect();
+  retry();
 
   return [ unsubscribe, triggerReconnect ];
 }
@@ -131,7 +166,7 @@ export function subscribeBackend(factory, calculateRetryTimeout, onError, callba
 export function defaultReconnect() {}
 
 export function defaultErrorHandler(err) {
-  console.error('an error');
+  console.error('useBackend error:', err);
 }
 
 export function calculateRetryTimeout(retryTimeout, retryCount) {

@@ -1,4 +1,3 @@
-import { registerBackend, unregisterBackend } from '@deutschesoft/awml/src/backends.js'
 import { useState, useRef, useEffect } from 'react';
 import { useRefAsCallback } from './useRefAsCallback.js';
 import { useEventHandler } from './useEventHandler.js';
@@ -45,6 +44,7 @@ export function useBackend(name, factory, retryTimeout, onError) {
     }
 
     const [ unsubscribe, triggerReconnect ] = subscribeBackend(
+      name,
       factory,
       (retryCount) => calculateRetryTimeout(retryTimeout.current, retryCount),
       onError,
@@ -59,17 +59,7 @@ export function useBackend(name, factory, retryTimeout, onError) {
       reconnect.current = defaultReconnect;
       unsubscribe();
     };
-  }, [ setBackend, factory, retryTimeout, onError ]);
-
-  useEffect(() => {
-    if (!backend) return;
-
-    registerBackend(name, backend);
-
-    return () => {
-      unregisterBackend(name, backend);
-    };
-  }, [ backend, name ]);
+  }, [ name, setBackend, factory, retryTimeout, onError ]);
 
   return [ backend, useRefAsCallback(reconnect) ];
 }

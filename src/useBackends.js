@@ -78,6 +78,7 @@ class BackendsManager {
         });
 
         const [ unsubscribe, reconnect ] = subscribeBackend(
+          name,
           factory,
           (retryCount) => calculateRetryTimeout(value.retryTimeout, retryCount),
           value.onError || defaultErrorHandler,
