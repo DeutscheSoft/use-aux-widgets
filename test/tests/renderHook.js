@@ -1,4 +1,4 @@
-import 'global-jsdom/register';
+import './jsdom.js';
 import { renderHook } from '@testing-library/react';
 import { StrictMode } from 'react';
 
