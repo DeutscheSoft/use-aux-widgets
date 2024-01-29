@@ -145,7 +145,12 @@ export function subscribeBackend(name, factory, calculateRetryTimeout, onError, 
 
     clearRetry();
     if (backend) {
-      backend.close(); 
+      try {
+        if (backend.isOpen || backend.isInit)
+          backend.close();
+      } catch (err) {
+        console.error('Backend.close() failed: %o', err);
+      }
     }
   };
 
