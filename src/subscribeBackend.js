@@ -37,7 +37,7 @@ function waitForOpen(backend, continuation) {
 }
 
 function waitForClose(backend, continuation) {
-  waitForEvents(backend, [ 'open', 'error', 'close' ], (eventName, args) => {
+  waitForEvents(backend, [ 'error', 'close' ], (eventName, args) => {
     switch (eventName) {
     case 'error':
       continuation('error', args[0]);
