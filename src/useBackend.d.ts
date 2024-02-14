@@ -25,4 +25,4 @@ export function useBackend<T extends object>(
   name: string,
   factory?: (() => Promise<T>) | (() => T),
   retryTimeout?: number | ((failureCount) => number),
-  onError?: (err: Error) => void): [ T|null, () => void ];
+  onError?: (err: Error | Event) => void): [ T|null, () => void ];

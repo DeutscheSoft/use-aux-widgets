@@ -1,7 +1,7 @@
 interface BackendOptions<T extends object> {
   factory: () => T;
   retryTimeout?: number | ((failureCount: number) => number);
-  onError?: (err: Error) => void;
+  onError?: (err: Error | Event) => void;
 }
 
 interface BackendResult<T> {
