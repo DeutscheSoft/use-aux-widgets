@@ -32,9 +32,9 @@ const component = componentFromWidget(
 
 - **`widgetImplementation`**_`: typeof Widget`_ - A widget implementation to
   generate a react component for.
-- **`bindings`**_`: { [name: string]: IBindingDescription}`_ - A set of binding
+- **`bindings`**_`: Record<string, IBindingDescription | IBindingDescription[]>`_ - A set of binding
   description for possible two-way bindings with options in the widget.
-- **`options`**_`{ [name: string]: any }`_ - A set of default options for
+- **`options`**_`: Record<string, any>`_ - A set of default options for
   widgets wrapped in the resulting component. The defaults specified using this
   argument can be overwritten using properties on the resulting component.
 - **`className`**_`string`_ - The default className used by this component. Note

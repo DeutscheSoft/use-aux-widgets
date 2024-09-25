@@ -19,9 +19,10 @@ interface IBindingDescriptionIncomplete {
   debug?: boolean;
 }
 
-interface BindingDescriptions {
-  [name: string]: IBindingDescriptionIncomplete;
-}
+type BindingDescriptions = Record<
+  string,
+  IBindingDescriptionIncomplete | IBindingDescriptionIncomplete[]
+>;
 
 /**
  * Creates a React component for the given widget type. The resulting

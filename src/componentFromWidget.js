@@ -5,6 +5,12 @@ import { hasOwnProperty } from './hasOwnProperty.js';
 import { forEachChangedProperty } from './forEachChangedProperty.js';
 
 function createBindingDescription(defaultDescription, value) {
+  if (Array.isArray(defaultDescription)) {
+    return defaultDescription.map((entry) =>
+      createBindingDescription(entry, value)
+    );
+  }
+
   if (value instanceof DynamicValue) {
     return {
       ...defaultDescription,
@@ -164,6 +170,14 @@ export function componentFromWidget(
   }
 
   return class extends Component {
+    _updateBindings() {
+      const { bindings, bindingDescriptions } = this;
+
+      bindings.update(
+        bindingDescriptions.flat().filter((description) => !!description)
+      );
+    }
+
     constructor() {
       super();
       this.elementRef = createRef();
@@ -188,9 +202,7 @@ export function componentFromWidget(
       this.bindings = bindings;
 
       if (initializeBindingDescriptions(bindingDescriptions, props)) {
-        bindings.update(
-          bindingDescriptions.filter((description) => !!description)
-        );
+        this._updateBindings();
       }
 
       initializeEventSubscriptions(auxWidget, this.eventSubscriptions, props);
@@ -293,10 +305,7 @@ export function componentFromWidget(
         }
       );
 
-      if (bindingsChanged)
-        this.bindings.update(
-          bindingDescriptions.filter((description) => !!description)
-        );
+      if (bindingsChanged) this._updateBindings();
     }
 
     componentWillUnmount() {
