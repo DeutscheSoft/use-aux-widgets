@@ -8,7 +8,4 @@
  * @param {Record<string,function>} events
  *      The event to subscribe to.
  */
-export function useWidgetEvents(
-    widget,
-    events: Record<string, Function>
-  ): void;
+export function useWidgetEvents(widget, events: Record<string, Function>): void;

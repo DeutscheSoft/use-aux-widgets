@@ -3,7 +3,8 @@ import { deepStrictEqual } from 'node:assert';
 import test from 'node:test';
 
 test('forEachChangedProperty', () => {
-  const removed = [], added = [];
+  const removed = [],
+    added = [];
 
   const removeCb = (name, value) => {
     removed.push({ name, value });
@@ -13,12 +14,7 @@ test('forEachChangedProperty', () => {
     added.push({ name, value, previousValue });
   };
 
-  forEachChangedProperty(
-    {},
-    {},
-    removeCb,
-    addCb
-  );
+  forEachChangedProperty({}, {}, removeCb, addCb);
 
   deepStrictEqual(removed, []);
   deepStrictEqual(added, []);
@@ -26,7 +22,7 @@ test('forEachChangedProperty', () => {
   forEachChangedProperty(
     {},
     {
-      foo: 32
+      foo: 32,
     },
     removeCb,
     addCb
@@ -34,66 +30,50 @@ test('forEachChangedProperty', () => {
 
   deepStrictEqual(removed, []);
   deepStrictEqual(added, [
-    { name: 'foo', value: 32, previousValue: undefined }
+    { name: 'foo', value: 32, previousValue: undefined },
   ]);
 
   added.length = 0;
 
   forEachChangedProperty(
     {
-      foo: 23
+      foo: 23,
     },
     {
-      foo: 42
+      foo: 42,
     },
     removeCb,
     addCb
   );
 
   deepStrictEqual(removed, []);
-  deepStrictEqual(added, [
-    { name: 'foo', value: 42, previousValue: 23 }
-  ]);
+  deepStrictEqual(added, [{ name: 'foo', value: 42, previousValue: 23 }]);
 
   added.length = 0;
 
   forEachChangedProperty(
     {
-      foo: 23
+      foo: 23,
     },
-    {
-    },
+    {},
     removeCb,
     addCb
   );
 
-  deepStrictEqual(removed, [
-    { name: 'foo', value: 23 }
-  ]);
-  deepStrictEqual(added, [ ]);
+  deepStrictEqual(removed, [{ name: 'foo', value: 23 }]);
+  deepStrictEqual(added, []);
   removed.length = 0;
 
   // Check that both from and to can be missing
-  forEachChangedProperty(
-    { foo: 23 },
-    null,
-    removeCb,
-    addCb);
-  deepStrictEqual(removed, [
-    { name: 'foo', value: 23 }
-  ]);
+  forEachChangedProperty({ foo: 23 }, null, removeCb, addCb);
+  deepStrictEqual(removed, [{ name: 'foo', value: 23 }]);
   deepStrictEqual(added, []);
   removed.length = 0;
 
-  forEachChangedProperty(
-    null,
-    { foo: 23 },
-    removeCb,
-    addCb);
+  forEachChangedProperty(null, { foo: 23 }, removeCb, addCb);
   deepStrictEqual(added, [
-    { name: 'foo', value: 23, previousValue: undefined }
+    { name: 'foo', value: 23, previousValue: undefined },
   ]);
   deepStrictEqual(removed, []);
   removed.length = 0;
-
 });

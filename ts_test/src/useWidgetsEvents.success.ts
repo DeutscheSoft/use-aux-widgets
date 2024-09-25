@@ -1,15 +1,14 @@
 import { useWidgetsEvents } from '../../index';
 
-
 function run(widget: object) {
   useWidgetsEvents(
-    [ widget, widget ], 
+    [widget, widget],
     [
       {
         foo: () => {},
         bar: () => {},
       },
-      null
+      null,
     ]
   );
 }

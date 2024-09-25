@@ -14,5 +14,5 @@ export function useWidgetEvents(widget, events) {
     return () => {
       subscriptions.forEach((cb) => cb());
     };
-  }, [ widget, events ]);
+  }, [widget, events]);
 }

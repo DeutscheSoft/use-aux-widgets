@@ -8,12 +8,12 @@ import test from 'node:test';
 
 test('useWidgetsBindings', () => {
   {
-    const options = [ { }, { } ];
+    const options = [{}, {}];
     const Widget = WidgetMock;
     const backendValue = DynamicValue.fromConstant(1);
     let bindings = [
-      { name: 'foo', backendValue, },
-      { name: 'bar', backendValue, }
+      { name: 'foo', backendValue },
+      { name: 'bar', backendValue },
     ];
     const { result, rerender, unmount } = renderHook(() => {
       const widgets = useWidgets(Widget, options);
@@ -32,10 +32,7 @@ test('useWidgetsBindings', () => {
     deepEqual(result.current[0].options, { foo: 1 });
     deepEqual(result.current[1].options, { bar: 1 });
 
-    bindings = [
-        null,
-        { name: 'foo', backendValue }
-    ];
+    bindings = [null, { name: 'foo', backendValue }];
     rerender();
     deepEqual(result.current[0].options, { foo: 1 });
     deepEqual(result.current[1].options, { bar: 1, foo: 4 });
@@ -47,8 +44,8 @@ test('useWidgetsBindings', () => {
     deepEqual(result.current[1].options, { bar: 1, foo: 4 });
 
     bindings = [
-      { name: 'foo', backendValue, },
-      { name: 'bar', backendValue, }
+      { name: 'foo', backendValue },
+      { name: 'bar', backendValue },
     ];
     rerender();
     deepEqual(result.current[0].options, { foo: 23 });

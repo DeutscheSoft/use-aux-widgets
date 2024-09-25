@@ -6,7 +6,7 @@ will always call the latest value in the ref.
 This hook can be used to wrap event handlers.
 
 ```ts
-callback = useEVentHandler(callback)
+callback = useEVentHandler(callback);
 ```
 
 ## Usage
@@ -17,8 +17,6 @@ import { useEventHandler } from '@deutschesoft/use-aux-widgets';
 function Button(props) {
   const onClick = useEventHandler(props.onClick);
 
-  return (
-    <button onClick={ onClick }>Click here!</button>
-  );
+  return <button onClick={onClick}>Click here!</button>;
 }
 ```

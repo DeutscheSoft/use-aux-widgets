@@ -17,15 +17,11 @@ import { useMemoWithCleanup } from './useMemoWithCleanup.js';
 export function useWidget(Widget, options) {
   const optionsRef = useRef(null);
   const widget = useMemoWithCleanup(() => {
-    if (!Widget || !options)
-      return [ null, null ];
+    if (!Widget || !options) return [null, null];
     optionsRef.current = options;
     const widget = new Widget(options);
-    return [
-      widget,
-      () => widget.destroy(),
-    ];
-  }, [ Widget, !!options ]);
+    return [widget, () => widget.destroy()];
+  }, [Widget, !!options]);
 
   if (widget && !widget.isDestructed()) {
     forEachChangedProperty(

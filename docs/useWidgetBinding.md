@@ -20,9 +20,9 @@ function Equalizer(props) {
   const { gain$, frequency$, q$ } = props.band1;
   const band = useWidget(EqBand, {
     type: 'parametric',
-    label: 'Band#1'
+    label: 'Band#1',
   });
-  
+
   useWidgetBinding(band, [
     {
       name: 'gain',
@@ -35,11 +35,11 @@ function Equalizer(props) {
     {
       name: 'q',
       backendValue: q$,
-    }
+    },
   ]);
 
-  const bands = [ band ];
+  const bands = [band];
 
-  return <EqualizerComponent bands={ bands }/>;
+  return <EqualizerComponent bands={bands} />;
 }
 ```

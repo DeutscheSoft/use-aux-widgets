@@ -7,5 +7,5 @@ export function run() {
 
   const cb2 = useEventHandler(cb);
 
-  let result: string = cb2("foo", "bar", 2.3);
+  let result: string = cb2('foo', 'bar', 2.3);
 }

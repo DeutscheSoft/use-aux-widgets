@@ -10,5 +10,5 @@ import { IBindingDescription } from '@deutschesoft/awml/src/bindings';
  */
 export function useWidgetsBindings(
   widget: object[],
-  bindingDescription: (IBindingDescription | IBindingDescription[])[],
+  bindingDescription: (IBindingDescription | IBindingDescription[])[]
 ): void;

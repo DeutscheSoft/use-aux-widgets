@@ -12,6 +12,6 @@
  *      The event handlers to subscribe for each widget.
  */
 export function useWidgetsEvents(
-    widgets: object[],
-    events: (Record<string, Function> | null)[]
-  ): void;
+  widgets: object[],
+  events: (Record<string, Function> | null)[]
+): void;

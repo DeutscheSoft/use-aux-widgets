@@ -29,9 +29,9 @@ export class WidgetMock {
   subscribe(eventName, callback) {
     const eventHandlers = this.eventHandlers;
     let handlers = eventHandlers.get(eventName);
-    
+
     if (!handlers) {
-      eventHandlers.set(eventName, handlers = new Set());
+      eventHandlers.set(eventName, (handlers = new Set()));
     }
 
     handlers.add(callback);
@@ -45,13 +45,10 @@ export class WidgetMock {
     const eventHandlers = this.eventHandlers;
     const handlers = eventHandlers.get(eventName);
 
-    if (!handlers)
-      return;
+    if (!handlers) return;
 
     handlers.forEach((cb) => {
       cb.apply(this, args);
     });
   }
-
-
 }

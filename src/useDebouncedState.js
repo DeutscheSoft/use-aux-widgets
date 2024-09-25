@@ -21,35 +21,38 @@ import { useState, useRef, useCallback, useEffect } from 'react';
  *      Returns both the state value and a setter.
  */
 export function useDebouncedState(debounceTime, defaultValue) {
-  const [ state, setState ] = useState(defaultValue);
+  const [state, setState] = useState(defaultValue);
   const ref = useRef({
     lastSet: 0,
     timerId: -1,
     lastValue: null,
   });
 
-  const debouncedSetter = useCallback((value) => {
-    const current = ref.current;
-    const { lastSet, timerId } = current;
-    const now = performance.now();
-    const time = now - lastSet;
+  const debouncedSetter = useCallback(
+    (value) => {
+      const current = ref.current;
+      const { lastSet, timerId } = current;
+      const now = performance.now();
+      const time = now - lastSet;
 
-    if (!debounceTime || time >= debounceTime) {
-      current.lastSet = now;
-      setState(value);
-    } else {
-      if (timerId === -1) {
-        current.timerId = setTimeout(() => {
-          const value = current.lastValue;
-          current.timerId = -1;
-          current.lastSet = performance.now();
-          setState(value)
-        }, debounceTime - time);
+      if (!debounceTime || time >= debounceTime) {
+        current.lastSet = now;
+        setState(value);
+      } else {
+        if (timerId === -1) {
+          current.timerId = setTimeout(() => {
+            const value = current.lastValue;
+            current.timerId = -1;
+            current.lastSet = performance.now();
+            setState(value);
+          }, debounceTime - time);
+        }
+
+        current.lastValue = value;
       }
-
-      current.lastValue = value;
-    }
-  }, [ debounceTime ]);
+    },
+    [debounceTime]
+  );
 
   useEffect(() => {
     return () => {
@@ -61,5 +64,5 @@ export function useDebouncedState(debounceTime, defaultValue) {
     };
   }, []);
 
-  return [ state, debouncedSetter ];
+  return [state, debouncedSetter];
 }

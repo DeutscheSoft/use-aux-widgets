@@ -17,5 +17,5 @@ export function useWidgetsEvents(widgets, events) {
     return () => {
       subscriptions.forEach((cb) => cb());
     };
-  }, [ widgets, events ]);
+  }, [widgets, events]);
 }

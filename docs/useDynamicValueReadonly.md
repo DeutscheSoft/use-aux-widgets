@@ -25,8 +25,8 @@ function Channel(props) {
   const muted = useDynamicValue(mute$);
 
   return (
-    <div className='channel'>
-      <button>{ muted ? 'Muted' : 'Not Muted' }</button>
+    <div className="channel">
+      <button>{muted ? 'Muted' : 'Not Muted'}</button>
     </div>
   );
 }

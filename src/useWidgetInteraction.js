@@ -12,6 +12,6 @@ import { useWidgetOption } from './useWidgetOption.js';
  * @returns {boolean}
  *      Returns true while the widget is interacted with.
  */
-export function useWidgetInteraction(widget, debounce=0) {
+export function useWidgetInteraction(widget, debounce = 0) {
   return useWidgetOption(widget, 'interacting', false, debounce);
 }

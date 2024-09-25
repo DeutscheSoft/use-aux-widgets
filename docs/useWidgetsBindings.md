@@ -18,14 +18,14 @@ import { useWidgets, useWidgetsBindings } from '@deutschesoft/use-aux-widgets';
 import { EqBand } from '@deutschesoft/aux-widgets/src/index.pure.js';
 
 const bandOptions = [
-    {
-        type: 'parametric',
-        label: 'Band#1'
-    },
-    {
-        type: 'parametric',
-        label: 'Band#2'
-    }
+  {
+    type: 'parametric',
+    label: 'Band#1',
+  },
+  {
+    type: 'parametric',
+    label: 'Band#2',
+  },
 ];
 
 function Equalizer(props) {
@@ -33,27 +33,27 @@ function Equalizer(props) {
   const bands = useWidgets(EqBand, bandOptions);
 
   const bindingOptions = useMemo(() => {
-      return bandProperties.map((band) => {
-          const { gain$, frequency$, q$ } = band;
-          return [
-            {
-              name: 'gain',
-              backendValue: gain$,
-            },
-            {
-              name: 'freq',
-              backendValue: frequency$,
-            },
-            {
-              name: 'q',
-              backendValue: q$,
-            }
-          ];
-      });
-  }, [ bandProperties ]);
-  
+    return bandProperties.map((band) => {
+      const { gain$, frequency$, q$ } = band;
+      return [
+        {
+          name: 'gain',
+          backendValue: gain$,
+        },
+        {
+          name: 'freq',
+          backendValue: frequency$,
+        },
+        {
+          name: 'q',
+          backendValue: q$,
+        },
+      ];
+    });
+  }, [bandProperties]);
+
   useWidgetsBindings(bands, bindingOptions);
 
-  return <EqualizerComponent bands={ bands }/>;
+  return <EqualizerComponent bands={bands} />;
 }
 ```

@@ -15,15 +15,11 @@ function useBindingDescription(bindingDescription) {
 
 function useBindingsForWidget(widget) {
   return useMemoWithCleanup(() => {
-    if (!widget || widget.isDestructed())
-      return [ null, null ];
+    if (!widget || widget.isDestructed()) return [null, null];
 
     const bindings = new Bindings(widget, widget.element);
-    return [
-      bindings,
-      () => bindings.dispose()
-    ];
-  }, [ widget ]);
+    return [bindings, () => bindings.dispose()];
+  }, [widget]);
 }
 
 /**
@@ -43,5 +39,5 @@ export function useWidgetBinding(widget, bindingDescription) {
   useEffect(() => {
     if (bindings && widget && !widget.isDestructed())
       bindings.update(bindingDescription);
-  }, [ widget, bindings, bindingDescription ]);
+  }, [widget, bindings, bindingDescription]);
 }

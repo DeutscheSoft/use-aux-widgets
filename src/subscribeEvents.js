@@ -7,8 +7,6 @@ export function subscribeEvents(widget, events, subscriptions) {
 
     if (!callback) continue;
 
-    subscriptions.push(
-      widget.subscribe(eventName, callback)
-    );
+    subscriptions.push(widget.subscribe(eventName, callback));
   }
 }

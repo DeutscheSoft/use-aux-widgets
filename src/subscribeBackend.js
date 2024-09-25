@@ -1,4 +1,7 @@
-import { registerBackend, unregisterBackend } from '@deutschesoft/awml/src/backends.js'
+import {
+  registerBackend,
+  unregisterBackend,
+} from '@deutschesoft/awml/src/backends.js';
 
 function waitForEvents(backend, eventNames, continuation) {
   const callbacks = eventNames.map((eventName, index) => {
@@ -18,17 +21,17 @@ function waitForOpen(backend, continuation) {
   if (backend.isOpen) {
     continuation('open', backend);
   } else if (backend.isInit) {
-    waitForEvents(backend, [ 'open', 'error', 'close' ], (eventName, args) => {
+    waitForEvents(backend, ['open', 'error', 'close'], (eventName, args) => {
       switch (eventName) {
-      case 'open':
-        continuation('open', backend);
-        break;
-      case 'error':
-        continuation('error', args[0]);
-        break;
-      case 'close':
-        continuation('close');
-        break;
+        case 'open':
+          continuation('open', backend);
+          break;
+        case 'error':
+          continuation('error', args[0]);
+          break;
+        case 'close':
+          continuation('close');
+          break;
       }
     });
   } else {
@@ -37,14 +40,14 @@ function waitForOpen(backend, continuation) {
 }
 
 function waitForClose(backend, continuation) {
-  waitForEvents(backend, [ 'error', 'close' ], (eventName, args) => {
+  waitForEvents(backend, ['error', 'close'], (eventName, args) => {
     switch (eventName) {
-    case 'error':
-      continuation('error', args[0]);
-      break;
-    case 'close':
-      continuation('close');
-      break;
+      case 'error':
+        continuation('error', args[0]);
+        break;
+      case 'close':
+        continuation('close');
+        break;
     }
   });
 }
@@ -62,11 +65,13 @@ function connect(name, factory, continuation) {
     const task = factory();
 
     if (task.then) {
-      task.then((backend) => {
-        waitForOpen(backend, continuation);
-      }).catch((err) => {
-        continuation('error', err);
-      });
+      task
+        .then((backend) => {
+          waitForOpen(backend, continuation);
+        })
+        .catch((err) => {
+          continuation('error', err);
+        });
     } else {
       const backend = task;
       waitForOpen(backend, continuation);
@@ -76,7 +81,13 @@ function connect(name, factory, continuation) {
   }
 }
 
-export function subscribeBackend(name, factory, calculateRetryTimeout, onError, callback) {
+export function subscribeBackend(
+  name,
+  factory,
+  calculateRetryTimeout,
+  onError,
+  callback
+) {
   let active = true;
   let backend = null;
   let retryCount = 0;
@@ -146,8 +157,7 @@ export function subscribeBackend(name, factory, calculateRetryTimeout, onError, 
     clearRetry();
     if (backend) {
       try {
-        if (backend.isOpen || backend.isInit)
-          backend.close();
+        if (backend.isOpen || backend.isInit) backend.close();
       } catch (err) {
         console.error('Backend.close() failed: %o', err);
       }
@@ -164,7 +174,7 @@ export function subscribeBackend(name, factory, calculateRetryTimeout, onError, 
 
   retry();
 
-  return [ unsubscribe, triggerReconnect ];
+  return [unsubscribe, triggerReconnect];
 }
 
 // does nothing
@@ -178,10 +188,8 @@ export function calculateRetryTimeout(retryTimeout, retryCount) {
   if (typeof retryTimeout === 'function') {
     return retryTimeout(retryCount);
   } else {
-    if (!(retryTimeout > 0))
-      retryTimeout = 500;
+    if (!(retryTimeout > 0)) retryTimeout = 500;
 
     return Math.min(10, Math.pow(1.4, retryCount)) * retryTimeout;
   }
 }
-

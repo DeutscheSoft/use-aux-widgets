@@ -25,5 +25,5 @@ export function useWidgetEvent(widget, eventName, callback) {
     if (!eventName) return;
     if (!widget || widget.isDestructed()) return;
     return widget.subscribe(eventName, callback);
-  }, [ widget, eventName, callback ]);
+  }, [widget, eventName, callback]);
 }

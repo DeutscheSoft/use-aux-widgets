@@ -8,7 +8,7 @@ In most situations using `on<EventName>` properties on widgets is a better
 alternative.
 
 ```ts
-useWidgetEvents(widget, events) 
+useWidgetEvents(widget, events);
 ```
 
 - **`widget`**_`: Widget`_ - The widget instance.

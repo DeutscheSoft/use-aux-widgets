@@ -14,7 +14,7 @@
  *      The event callback.
  */
 export function useWidgetEvent(
-    widget: object,
-    eventName?: string,
-    callback?: Function
-  ): void;
+  widget: object,
+  eventName?: string,
+  callback?: Function
+): void;

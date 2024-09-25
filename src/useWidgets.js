@@ -16,7 +16,7 @@ function createWidget(Widget, options) {
 export function useWidgets(Widget, options) {
   const optionsRef = useRef(options);
   const widgetsRef = useRef([]);
-  const [ widgets, setWidgets ] = useState(widgetsRef.current);
+  const [widgets, setWidgets] = useState(widgetsRef.current);
 
   // Create or destroy widgets based on the length of options and update
   // options if they changed.
@@ -25,7 +25,10 @@ export function useWidgets(Widget, options) {
     let widgets = widgetsRef.current;
     const updateCount = Math.min(options.length, widgets.length);
 
-    if (options.length !== widgets.length || widgets.some((widget) => !(widget instanceof Widget))) {
+    if (
+      options.length !== widgets.length ||
+      widgets.some((widget) => !(widget instanceof Widget))
+    ) {
       // create a copy
       widgets = widgets.slice(0);
     }
@@ -67,11 +70,10 @@ export function useWidgets(Widget, options) {
       widgetsRef.current = widgets;
       setWidgets(widgets);
     }
-  }, [ Widget, options, setWidgets ]);
+  }, [Widget, options, setWidgets]);
 
   useEffect(() => {
-    return () => {
-    };
+    return () => {};
   }, []);
 
   return widgets;

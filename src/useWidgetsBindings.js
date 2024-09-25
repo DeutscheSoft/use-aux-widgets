@@ -3,12 +3,11 @@ import { Bindings } from '@deutschesoft/awml/src/bindings.js';
 import { compareBindingDescriptions } from './compareBindingDescriptions.js';
 
 function useBindingsForWidgets(widgets) {
-  const [ descriptions, setDescriptions ] = useState([]);
+  const [descriptions, setDescriptions] = useState([]);
 
   useEffect(() => {
     const tmp = widgets.map((widget) => {
-      if (!widget || widget.isDestructed())
-        return null;
+      if (!widget || widget.isDestructed()) return null;
 
       return new Bindings(widget, widget.element);
     });
@@ -17,28 +16,23 @@ function useBindingsForWidgets(widgets) {
 
     return () => {
       tmp.forEach((bindings) => {
-        if (bindings)
-          bindings.dispose();
+        if (bindings) bindings.dispose();
       });
     };
-  }, [ widgets ]);
+  }, [widgets]);
 
   return descriptions;
 }
 
 function compareListOfBindingDescriptions(a, b) {
-  if (a === b || !a && !b)
-    return true;
+  if (a === b || (!a && !b)) return true;
 
-  if (!a || !b)
-    return false;
+  if (!a || !b) return false;
 
-  if (a.length !== b.length)
-    return false;
+  if (a.length !== b.length) return false;
 
   for (let i = 0; i < a.length; i++) {
-    if (!compareBindingDescriptions(a[i], b[i]))
-      return false;
+    if (!compareBindingDescriptions(a[i], b[i])) return false;
   }
 
   return true;
@@ -63,8 +57,7 @@ export function useWidgetsBindings(widgets, bindingDescriptions) {
     throw new TypeError('expected list of binding descriptions.');
   }
 
-  if (!Array.isArray(widgets))
-    throw new TypeError('expected list of widgets.');
+  if (!Array.isArray(widgets)) throw new TypeError('expected list of widgets.');
 
   bindingDescriptions = useBindingDescriptions(bindingDescriptions);
 
@@ -75,5 +68,5 @@ export function useWidgetsBindings(widgets, bindingDescriptions) {
       if (widget && !widget.isDestructed())
         bindings[i].update(bindingDescriptions[i] || null);
     }
-  }, [ bindings, widgets, bindingDescriptions ]);
+  }, [bindings, widgets, bindingDescriptions]);
 }

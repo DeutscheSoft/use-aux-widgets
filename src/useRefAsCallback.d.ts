@@ -8,4 +8,6 @@ interface MutableRefObject<T> {
  * @param Ref
  *      A ref which contains a function.
  */
-export function useRefAsCallback<T extends (...args: any[]) => any>(ref: MutableRefObject<T>): T;
+export function useRefAsCallback<T extends (...args: any[]) => any>(
+  ref: MutableRefObject<T>
+): T;

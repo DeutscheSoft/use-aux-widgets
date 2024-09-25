@@ -6,12 +6,11 @@ import test from 'node:test';
 
 test('useWidgets', () => {
   {
-    let options = [
-      { foo: 1 },
-      { bar: 1 },
-    ];
+    let options = [{ foo: 1 }, { bar: 1 }];
     const Widget = WidgetMock;
-    const { result, rerender, unmount } = renderHook(() => useWidgets(Widget, options));
+    const { result, rerender, unmount } = renderHook(() =>
+      useWidgets(Widget, options)
+    );
 
     let a = result.current;
     assert(Array.isArray(a));
@@ -25,10 +24,7 @@ test('useWidgets', () => {
 
     // Check that widgets are updated but not recreated and that the
     // returned array remains the same
-    options = [
-      options[1],
-      options[0]
-    ];
+    options = [options[1], options[0]];
     rerender();
     strictEqual(a, result.current);
     result.current.forEach((w, i) => strictEqual(w, a[i]));
@@ -39,10 +35,7 @@ test('useWidgets', () => {
     });
 
     // Add one widget at the end
-    options = [
-      ...options,
-      { flu: 3 },
-    ];
+    options = [...options, { flu: 3 }];
     rerender();
     notStrictEqual(a, result.current);
     a.forEach((w, i) => strictEqual(w, result.current[i]));
@@ -54,10 +47,7 @@ test('useWidgets', () => {
     });
 
     // Remove one widgets
-    options = [
-      options[0],
-      options[1]
-    ];
+    options = [options[0], options[1]];
     rerender();
     notStrictEqual(a, result.current);
     result.current.forEach((w, i) => strictEqual(w, a[i]));
@@ -78,10 +68,7 @@ test('useWidgets', () => {
   }
 
   {
-    const options = [
-      { foo: 1 },
-      { bar: 1 },
-    ];
+    const options = [{ foo: 1 }, { bar: 1 }];
     const Widget = WidgetMock;
     const { unmount } = renderHook(() => useWidgets(Widget, options));
 

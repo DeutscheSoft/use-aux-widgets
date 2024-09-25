@@ -10,6 +10,6 @@ export function useRefAsCallback(ref) {
   return useMemo(() => {
     return function (...args) {
       return ref.current.apply(this, args);
-    }
-  }, [ ref ]);
+    };
+  }, [ref]);
 }

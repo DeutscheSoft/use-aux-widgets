@@ -23,4 +23,5 @@ export function useWidgetOption<T>(
   widget,
   name: string,
   defaultValue: T,
-  debounce?: number): T;
+  debounce?: number
+): T;

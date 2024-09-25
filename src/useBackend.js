@@ -2,7 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { useRefAsCallback } from './useRefAsCallback.js';
 import { useEventHandler } from './useEventHandler.js';
 import { useLatest } from './useLatest.js';
-import { subscribeBackend, defaultReconnect, defaultErrorHandler, calculateRetryTimeout } from './subscribeBackend.js';
+import {
+  subscribeBackend,
+  defaultReconnect,
+  defaultErrorHandler,
+  calculateRetryTimeout,
+} from './subscribeBackend.js';
 
 /**
  * Creates a backend which automatically reconnects on error.
@@ -31,7 +36,7 @@ export function useBackend(name, factory, retryTimeout, onError) {
   onError = useEventHandler(onError || defaultErrorHandler);
   retryTimeout = useLatest(retryTimeout || 500);
 
-  const [ backend, setBackend ] = useState(null);
+  const [backend, setBackend] = useState(null);
   const reconnect = useRef(defaultReconnect);
 
   if (typeof name !== 'string' || !name)
@@ -43,7 +48,7 @@ export function useBackend(name, factory, retryTimeout, onError) {
       return;
     }
 
-    const [ unsubscribe, triggerReconnect ] = subscribeBackend(
+    const [unsubscribe, triggerReconnect] = subscribeBackend(
       name,
       factory,
       (retryCount) => calculateRetryTimeout(retryTimeout.current, retryCount),
@@ -59,7 +64,7 @@ export function useBackend(name, factory, retryTimeout, onError) {
       reconnect.current = defaultReconnect;
       unsubscribe();
     };
-  }, [ name, setBackend, factory, retryTimeout, onError ]);
+  }, [name, setBackend, factory, retryTimeout, onError]);
 
-  return [ backend, useRefAsCallback(reconnect) ];
+  return [backend, useRefAsCallback(reconnect)];
 }

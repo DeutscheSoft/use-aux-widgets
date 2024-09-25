@@ -22,7 +22,12 @@ Both the `className` and `style` properties of standard HTML elements are
 applied to the `<div>` element used by the widget.
 
 ```ts
-const component = componentFromWidget(widgetImplementation, bindings, options, className);
+const component = componentFromWidget(
+  widgetImplementation,
+  bindings,
+  options,
+  className
+);
 ```
 
 - **`widgetImplementation`**_`: typeof Widget`_ - A widget implementation to
@@ -46,7 +51,7 @@ const FaderComponent = componentFromWidget(
   Fader,
   {
     value$: {
-      name: 'value'
+      name: 'value',
     },
   },
   {
@@ -61,7 +66,7 @@ function MonoChannel(props) {
 
   return (
     <div className="mono-channel">
-      <FaderComponent value$={ gain$ } />
+      <FaderComponent value$={gain$} />
     </div>
   );
 }

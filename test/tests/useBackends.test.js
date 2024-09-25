@@ -8,9 +8,11 @@ import test from 'node:test';
 test('useBackends', async () => {
   {
     let options = {
-      foobar: { },
+      foobar: {},
     };
-    const { result, rerender, unmount } = renderHook(() => useBackends(options));
+    const { result, rerender, unmount } = renderHook(() =>
+      useBackends(options)
+    );
     deepEqual(result.current, {});
 
     let foobarB = null;
@@ -21,7 +23,7 @@ test('useBackends', async () => {
           foobarB = new BackendMock(true);
           return foobarB;
         },
-      }
+      },
     };
     rerender();
     strictEqual(typeof result.current, 'object');
@@ -43,7 +45,7 @@ test('useBackends', async () => {
           foobarB = new BackendMock(false);
           return foobarB;
         },
-      }
+      },
     };
     rerender();
     strictEqual(typeof result.current, 'object');

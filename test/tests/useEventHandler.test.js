@@ -5,9 +5,11 @@ import test from 'node:test';
 
 test('useEventHandler', () => {
   let called = false;
-  const { result, rerender, unmount } = renderHook(() => useEventHandler(() => {
-    called = true;
-  }));
+  const { result, rerender, unmount } = renderHook(() =>
+    useEventHandler(() => {
+      called = true;
+    })
+  );
 
   strictEqual(called, false);
   strictEqual(typeof result.current, 'function');

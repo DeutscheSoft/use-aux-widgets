@@ -4,10 +4,10 @@ Creates a list of widgets from the given options and installs a list of bindings
 
 ```ts
 const widgets = useWidgetsWithBindingsAndEvents(
-    widgetImplementation,
-    options,
-    bindings,
-    events
+  widgetImplementation,
+  options,
+  bindings,
+  events
 );
 ```
 

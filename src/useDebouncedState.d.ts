@@ -1,4 +1,3 @@
-
 /**
  * A variation of the standard useState which debounces value changes by a given
  * delay. This can be useful where the state can change quickly (e.g. due to a
@@ -20,6 +19,6 @@
  *      Returns both the state value and a setter.
  */
 export function useDebouncedState<T>(
-    debounceTime: number,
-    defaultValue?: T
-  ): [ T, (value: T) => void ];
+  debounceTime: number,
+  defaultValue?: T
+): [T, (value: T) => void];

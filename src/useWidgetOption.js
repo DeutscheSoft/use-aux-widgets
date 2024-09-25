@@ -22,10 +22,13 @@ import { useDebouncedState } from './useDebouncedState.js';
  * @returns
  *      Returns the value of the option or `defaultValue` if `widget` is `null`.
  */
-export function useWidgetOption(widget, name, defaultValue, debounce=0) {
+export function useWidgetOption(widget, name, defaultValue, debounce = 0) {
   if (widget && widget.isDestructed()) widget = null;
 
-  const [ value, setValue ] = useDebouncedState(debounce, widget ? widget.get(name) : defaultValue);
+  const [value, setValue] = useDebouncedState(
+    debounce,
+    widget ? widget.get(name) : defaultValue
+  );
 
   useEffect(() => {
     if (!widget || widget.isDestructed()) return;
@@ -35,7 +38,7 @@ export function useWidgetOption(widget, name, defaultValue, debounce=0) {
     return widget.subscribe('set_' + name, (value) => {
       setValue(value);
     });
-  }, [ widget, name, setValue ]);
+  }, [widget, name, setValue]);
 
   return value;
 }

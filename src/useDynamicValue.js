@@ -26,12 +26,21 @@ function dummySetter(value) {
  *      that, if set to `false`, the current value of the dynamic value is not
  *      ignored.
  */
-export function useDynamicValue(dynamicValue, defaultValue=undefined, replay=true) {
+export function useDynamicValue(
+  dynamicValue,
+  defaultValue = undefined,
+  replay = true
+) {
   const value = useDynamicValueReadonly(dynamicValue, defaultValue, replay);
 
-  const setter = useCallback(dynamicValue ? (value) => {
-    return dynamicValue.set(value);
-  } : dummySetter, [ dynamicValue ]);
+  const setter = useCallback(
+    dynamicValue
+      ? (value) => {
+          return dynamicValue.set(value);
+        }
+      : dummySetter,
+    [dynamicValue]
+  );
 
-  return [ value, setter ];
+  return [value, setter];
 }

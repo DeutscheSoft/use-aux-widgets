@@ -53,7 +53,9 @@ test('useBackend', async () => {
       }
       return foobarB;
     };
-    const { result, unmount, rerender } = renderHook(() => useBackend('foobar', factory, reconnectTimeout, onError));
+    const { result, unmount, rerender } = renderHook(() =>
+      useBackend('foobar', factory, reconnectTimeout, onError)
+    );
 
     strictEqual(result.current[0], null);
     strictEqual(getBackend('foobar'), void 0);
@@ -82,12 +84,13 @@ test('useBackend', async () => {
     let foobarB;
     let fail = true;
     const factory = () => {
-      if (fail)
-        throw new Error('hello');
+      if (fail) throw new Error('hello');
       foobarB = new BackendMock(true);
       return foobarB;
     };
-    const { result, unmount, rerender } = renderHook(() => useBackend('foobar', factory, reconnectTimeout, onError));
+    const { result, unmount, rerender } = renderHook(() =>
+      useBackend('foobar', factory, reconnectTimeout, onError)
+    );
 
     strictEqual(result.current[0], null);
     strictEqual(getBackend('foobar'), void 0);
@@ -119,7 +122,9 @@ test('useBackend', async () => {
       foobarB = new BackendMock(true);
       return foobarB;
     };
-    const { result, unmount, rerender } = renderHook(() => useBackend('foobar', factory, reconnectTimeout, onError));
+    const { result, unmount, rerender } = renderHook(() =>
+      useBackend('foobar', factory, reconnectTimeout, onError)
+    );
 
     strictEqual(result.current[0], foobarB);
     strictEqual(getBackend('foobar'), foobarB);
@@ -161,7 +166,9 @@ test('useBackend', async () => {
       foobarB = new BackendMock(true);
       return foobarB;
     };
-    const { result, unmount, rerender } = renderHook(() => useBackend('foobar', factory, reconnectTimeout, onError));
+    const { result, unmount, rerender } = renderHook(() =>
+      useBackend('foobar', factory, reconnectTimeout, onError)
+    );
 
     strictEqual(result.current[0], foobarB);
     strictEqual(getBackend('foobar'), foobarB);

@@ -18,7 +18,9 @@ function createBindingDescription(defaultDescription, value) {
   } else if (value === undefined || value === null) {
     return null;
   } else {
-    throw new TypeError('Unexpected value for binding description. Expected DynamicValue or BindingDescription.');
+    throw new TypeError(
+      'Unexpected value for binding description. Expected DynamicValue or BindingDescription.'
+    );
   }
 }
 
@@ -43,11 +45,21 @@ function updateClassName(element, className, prevClassName, defaultClassNames) {
   const prevClassNames = prevClassName.split(classListSplit);
 
   classNames.forEach((name) => {
-    if (name === '' || prevClassNames.includes(name) || defaultClassNames.includes(name)) return;
+    if (
+      name === '' ||
+      prevClassNames.includes(name) ||
+      defaultClassNames.includes(name)
+    )
+      return;
     element.classList.add(name);
   });
   prevClassNames.forEach((name) => {
-    if (name === '' || classNames.includes(name) || defaultClassNames.includes(name)) return;
+    if (
+      name === '' ||
+      classNames.includes(name) ||
+      defaultClassNames.includes(name)
+    )
+      return;
     element.classList.remove(name);
   });
 }
@@ -96,12 +108,15 @@ function updateRef(ref, value) {
  *      component. This can be used to create several components for the same
  *      widget with slightly different styles.
  */
-export function componentFromWidget(Widget, bindingDefaults, defaultOptions, defaultClassName) {
-  if (!bindingDefaults)
-    bindingDefaults = {};
+export function componentFromWidget(
+  Widget,
+  bindingDefaults,
+  defaultOptions,
+  defaultClassName
+) {
+  if (!bindingDefaults) bindingDefaults = {};
 
-  if (!defaultOptions)
-    defaultOptions = {};
+  if (!defaultOptions) defaultOptions = {};
 
   const defaultClassNames = defaultClassName
     ? defaultClassName.split(classListSplit).filter((item) => item.length)
@@ -110,15 +125,16 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
   const optionTypes = Widget.getOptionTypes();
 
   const propertyToBindingIndex = new Map(
-    Object.keys(bindingDefaults).map(
-      (propertyName, index) => [ propertyName, index ]
-    )
+    Object.keys(bindingDefaults).map((propertyName, index) => [
+      propertyName,
+      index,
+    ])
   );
   const indexToBindingDefault = Object.values(bindingDefaults);
   const indexToBindingPropertyName = Object.keys(bindingDefaults);
 
   function optionsFromProps(props) {
-    const result = Object.assign({ }, defaultOptions);
+    const result = Object.assign({}, defaultOptions);
 
     for (const key in props) {
       if (optionTypes[key]) {
@@ -137,7 +153,10 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
 
       if (!hasOwnProperty(props, propertyName)) continue;
       const value = props[propertyName];
-      bindingDescriptions[i] = createBindingDescription(indexToBindingDefault[i], value);
+      bindingDescriptions[i] = createBindingDescription(
+        indexToBindingDefault[i],
+        value
+      );
       bindingsChanged = true;
     }
 
@@ -150,7 +169,9 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
       this.elementRef = createRef();
       this.auxWidget = null;
       this.bindings = null;
-      this.bindingDescriptions = new Array(indexToBindingDefault.length).fill(null);
+      this.bindingDescriptions = new Array(indexToBindingDefault.length).fill(
+        null
+      );
       this.eventSubscriptions = new Map();
     }
 
@@ -167,7 +188,9 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
       this.bindings = bindings;
 
       if (initializeBindingDescriptions(bindingDescriptions, props)) {
-        bindings.update(bindingDescriptions.filter((description) => !!description));
+        bindings.update(
+          bindingDescriptions.filter((description) => !!description)
+        );
       }
 
       initializeEventSubscriptions(auxWidget, this.eventSubscriptions, props);
@@ -177,17 +200,18 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
       if (hasOwnProperty(props, 'className'))
         updateClassName(element, props.className, '', defaultClassNames);
 
-      if (props.widgetRef)
-        updateRef(props.widgetRef, auxWidget);
+      if (props.widgetRef) updateRef(props.widgetRef, auxWidget);
     }
 
     componentDidUpdate(prevProps) {
-      const { auxWidget, props, bindingDescriptions, eventSubscriptions } = this;
+      const { auxWidget, props, bindingDescriptions, eventSubscriptions } =
+        this;
 
       let bindingsChanged = false;
 
       forEachChangedProperty(
-        prevProps, props,
+        prevProps,
+        props,
         (name, prevValue) => {
           if (name.endsWith('$')) {
             const bindingIndex = propertyToBindingIndex.get(name);
@@ -203,8 +227,7 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
             const unsubscribe = eventSubscriptions.get(eventName);
             eventSubscriptions.delete(eventName);
 
-            if (unsubscribe)
-              unsubscribe();
+            if (unsubscribe) unsubscribe();
           } else if (hasOwnProperty(optionTypes, name)) {
             if (hasOwnProperty(defaultOptions, name)) {
               auxWidget.set(name, defaultOptions[name]);
@@ -212,7 +235,12 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
               auxWidget.reset(name);
             }
           } else if (name === 'className') {
-            updateClassName(this.elementRef.current, '', prevValue, defaultClassNames);
+            updateClassName(
+              this.elementRef.current,
+              '',
+              prevValue,
+              defaultClassNames
+            );
           }
         },
         (name, value, prevValue) => {
@@ -222,23 +250,26 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
             // This binding does not exist. We have already warned about
             // it when it was set.
             if (bindingIndex === void 0) {
-              console.warn('Unknown binding %o=%o.',
-                           name, value);
+              console.warn('Unknown binding %o=%o.', name, value);
               return;
             }
 
-            bindingDescriptions[bindingIndex] =
-              createBindingDescription(indexToBindingDefault[bindingIndex], value);
+            bindingDescriptions[bindingIndex] = createBindingDescription(
+              indexToBindingDefault[bindingIndex],
+              value
+            );
             bindingsChanged = true;
           } else if (name.startsWith('on')) {
             const eventName = name.slice(2).toLowerCase();
             const unsubscribe = eventSubscriptions.get(eventName);
 
-            if (unsubscribe)
-              unsubscribe();
+            if (unsubscribe) unsubscribe();
 
             if (typeof value === 'function') {
-              eventSubscriptions.set(eventName, auxWidget.subscribe(eventName, value));
+              eventSubscriptions.set(
+                eventName,
+                auxWidget.subscribe(eventName, value)
+              );
             } else {
               eventSubscriptions.delete(eventName);
               throw new TypeError('Expected function as event handler.');
@@ -246,7 +277,12 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
           } else if (hasOwnProperty(optionTypes, name)) {
             auxWidget.set(name, value);
           } else if (name === 'className') {
-            updateClassName(this.elementRef.current, value, prevValue, defaultClassNames);
+            updateClassName(
+              this.elementRef.current,
+              value,
+              prevValue,
+              defaultClassNames
+            );
           } else if (name === 'style') {
             // Handled by render()
           } else if (name === 'widgetRef') {
@@ -254,10 +290,13 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
           } else {
             console.warn('Unknown property %o=%o', name, value);
           }
-        });
+        }
+      );
 
       if (bindingsChanged)
-        this.bindings.update(bindingDescriptions.filter((description) => !!description));
+        this.bindings.update(
+          bindingDescriptions.filter((description) => !!description)
+        );
     }
 
     componentWillUnmount() {
@@ -265,11 +304,9 @@ export function componentFromWidget(Widget, bindingDefaults, defaultOptions, def
       bindings.dispose();
       eventSubscriptions.clear();
 
-      if (auxWidget)
-        auxWidget.destroy();
+      if (auxWidget) auxWidget.destroy();
 
-      if (props.widgetRef)
-        updateRef(props.widgetRef, null);
+      if (props.widgetRef) updateRef(props.widgetRef, null);
 
       this.auxWidget = null;
     }

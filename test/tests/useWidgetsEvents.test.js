@@ -8,7 +8,7 @@ import test from 'node:test';
 test('useWidgetEvents', () => {
   {
     let called = 0;
-    const options = [ { }, { } ];
+    const options = [{}, {}];
     const Widget = WidgetMock;
     const callback = () => {
       called++;
@@ -19,7 +19,7 @@ test('useWidgetEvents', () => {
       },
       {
         bar: callback,
-      }
+      },
     ];
     const { result, rerender, unmount } = renderHook(() => {
       const widgets = useWidgets(Widget, options);
@@ -42,10 +42,7 @@ test('useWidgetEvents', () => {
     result.current[1].emit('foo');
     strictEqual(called, 2);
 
-    events = [
-        null,
-        { foo: callback }
-    ];
+    events = [null, { foo: callback }];
     rerender();
     result.current[0].emit('foo');
     result.current[1].emit('foo');

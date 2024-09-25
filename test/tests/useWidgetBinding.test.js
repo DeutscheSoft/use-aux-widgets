@@ -34,7 +34,7 @@ test('useWidgetBinding', () => {
       {
         name: 'bar',
         backendValue,
-      }
+      },
     ];
     rerender();
     deepEqual({ foo: 3, bar: 3 }, w.options);

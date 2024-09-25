@@ -10,7 +10,7 @@ than `debounceTime` milliseconds in the past. This means - for instance -
 that the first state change will always happen immediately.
 
 ```ts
-const [ value, setValue ] = useDebouncedState(debounceTime, defaultValue);
+const [value, setValue] = useDebouncedState(debounceTime, defaultValue);
 ```
 
 - **`debounceTime`**_`: number`_ - The number of milliseconds to debounce
@@ -21,21 +21,20 @@ const [ value, setValue ] = useDebouncedState(debounceTime, defaultValue);
 ## Usage
 
 ```jsx
-
 import { useDebouncedState } from '@deutschesoft/use-aux-widgets';
 
 function App() {
-  const [ x, setX ] = useDebouncedState(50, 0);
-  const [ y, setY ] = useDebouncedState(50, 0);
+  const [x, setX] = useDebouncedState(50, 0);
+  const [y, setY] = useDebouncedState(50, 0);
 
   const onMouseMove = useCallback((ev) => {
     setX(ev.clientX);
     setY(ev.clientY);
-  }, [ ]);
+  }, []);
 
   return (
-    <div onMouseMove={ onMouseMove }>
-      Mouse at ({ x }, { y }).
+    <div onMouseMove={onMouseMove}>
+      Mouse at ({x}, {y}).
     </div>
   );
 }

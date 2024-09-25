@@ -5,12 +5,11 @@ import { DynamicValue } from '@deutschesoft/awml/src/index.pure';
  * is returned and no setter.
  */
 export function useDynamicValueReadonly<T>(
-    dynamicValue: DynamicValue<T> | undefined | null,
-    defaultValue: T,
-    replay?: boolean
-  ): T;
+  dynamicValue: DynamicValue<T> | undefined | null,
+  defaultValue: T,
+  replay?: boolean
+): T;
 
 export function useDynamicValueReadonly<T>(
-    dynamicValue: DynamicValue<T> | undefined | null,
-  ): T | undefined;
-
+  dynamicValue: DynamicValue<T> | undefined | null
+): T | undefined;

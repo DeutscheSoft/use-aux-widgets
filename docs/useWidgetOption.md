@@ -3,7 +3,12 @@
 Returns the value of an aux widget option.
 
 ```ts
-const value = useWidgetOption(widget, name, defaultValue=undefined, debounceTime=0);
+const value = useWidgetOption(
+  widget,
+  name,
+  (defaultValue = undefined),
+  (debounceTime = 0)
+);
 ```
 
 - **`widget`**_`: Widget`_ - The widget to bind to.

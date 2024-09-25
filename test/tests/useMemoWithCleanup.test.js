@@ -5,7 +5,8 @@ import test from 'node:test';
 
 test('useMemoWithCleanup', () => {
   {
-    let created = 0, removed = 0;
+    let created = 0,
+      removed = 0;
     const create = () => {
       created++;
 
@@ -13,10 +14,12 @@ test('useMemoWithCleanup', () => {
         created,
         () => {
           removed++;
-        }
+        },
       ];
     };
-    const { result, rerender, unmount } = renderHook(() => useMemoWithCleanup(create));
+    const { result, rerender, unmount } = renderHook(() =>
+      useMemoWithCleanup(create)
+    );
 
     //strictEqual(created, removed+1);
     strictEqual(result.current, created);

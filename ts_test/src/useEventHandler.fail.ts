@@ -8,5 +8,5 @@ export function run() {
   const cb2 = useEventHandler(cb);
 
   // Note: wrong arguments
-  let result: string = cb2(4, "foo", "bar");
+  let result: string = cb2(4, 'foo', 'bar');
 }

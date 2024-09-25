@@ -5,15 +5,18 @@ interface BackendOptions<T extends object> {
 }
 
 interface BackendResult<T> {
-  readonly backend: T|null;
+  readonly backend: T | null;
   readonly reconnect: () => void;
 }
 
-type ResultFromOptions<Type> = Type extends BackendOptions<infer BackendType> ? BackendResult<BackendType> : never;
+type ResultFromOptions<Type> =
+  Type extends BackendOptions<infer BackendType>
+    ? BackendResult<BackendType>
+    : never;
 type BackendsOptions = Record<string, BackendOptions<object>>;
 type ResultsFromOptions<Type> = {
   readonly [Property in keyof Type]: ResultFromOptions<Type[Property]>;
-}
+};
 
 /**
  * Creates a list of backends. Backends will automatically reconnect.
@@ -43,4 +46,6 @@ type ResultsFromOptions<Type> = {
  *      is an object which contains the backend `backend` and the reconnect function
  *      `reconnect`.
  */
-export function useBackends<T extends BackendsOptions>(options: T): ResultsFromOptions<T>;
+export function useBackends<T extends BackendsOptions>(
+  options: T
+): ResultsFromOptions<T>;

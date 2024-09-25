@@ -4,7 +4,7 @@ Subscribes to a list of events in a list of widgets widget. The widgets are usua
 by a call to [`useWidgets`](./useWidgets.md).
 
 ```ts
-useWidgetsEvents(widgets, events) 
+useWidgetsEvents(widgets, events);
 ```
 
 - **`widgets`**_`: Widget[]`_ - The widget instances.

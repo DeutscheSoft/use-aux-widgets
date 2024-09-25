@@ -5,7 +5,7 @@ change whenever the dynamic value changes. The returned setter will - when
 called - call `.set()` on the dynamic value.
 
 ```ts
-const [ value, setValue ] = useDynamicValue(dynamicValue, defaultValue, replay);
+const [value, setValue] = useDynamicValue(dynamicValue, defaultValue, replay);
 ```
 
 - **`dynamicValue`**_`: DynamicValue`_ - The dynamic value to subscribe to.
@@ -23,15 +23,15 @@ import { useDynamicValue } from '@deutschesoft/use-aux-widgets';
 function Channel(props) {
   const { mute$ } = props;
 
-  const [ muted, setMuted ] = useDynamicValue(mute$);
+  const [muted, setMuted] = useDynamicValue(mute$);
 
   const onClick = () => {
     setMuted(!muted);
   };
 
   return (
-    <div className='channel'>
-      <button onClick={ onClick }>{ muted ? 'Muted' : 'Not Muted' }</button>
+    <div className="channel">
+      <button onClick={onClick}>{muted ? 'Muted' : 'Not Muted'}</button>
     </div>
   );
 }

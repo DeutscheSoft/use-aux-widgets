@@ -3,8 +3,12 @@
 Creates a backend which automatically reconnects on error.
 
 ```ts
-const [ backend, triggerReconnect ] = useBackend(name, factory, retryTimeout,
-                                                 onError);
+const [backend, triggerReconnect] = useBackend(
+  name,
+  factory,
+  retryTimeout,
+  onError
+);
 ```
 
 - **`name`**_`: string`_ - The name to use for this backend. Parameters of

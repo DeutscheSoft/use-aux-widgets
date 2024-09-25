@@ -10,7 +10,7 @@ test('StrictMode', () => {
     useEffect(() => {
       called++;
       return () => {
-        cleaned++; 
+        cleaned++;
       };
     }, []);
   };

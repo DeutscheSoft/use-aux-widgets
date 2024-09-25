@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react';
 import { forEachChangedProperty } from './forEachChangedProperty.js';
-import { subscribeBackend, defaultReconnect, defaultErrorHandler, calculateRetryTimeout } from './subscribeBackend.js';
+import {
+  subscribeBackend,
+  defaultReconnect,
+  defaultErrorHandler,
+  calculateRetryTimeout,
+} from './subscribeBackend.js';
 import { useMemoWithCleanup } from './useMemoWithCleanup.js';
 
 function compareBackendOptions(a, b) {
-  if (a === b || !a && !b) return true;
+  if (a === b || (!a && !b)) return true;
 
   if (!a || !b) return false;
 
-  return a.factory === b.factory &&
+  return (
+    a.factory === b.factory &&
     a.retryTimeout === b.retryTimeout &&
-    a.onError === b.onError;
+    a.onError === b.onError
+  );
 }
 
 class BackendsManager {
@@ -25,8 +32,7 @@ class BackendsManager {
     const { subscriptions } = this;
 
     const subscription = subscriptions.get(name);
-    if (!subscription)
-      return;
+    if (!subscription) return;
     subscriptions.delete(name);
     subscription();
   }
@@ -40,8 +46,8 @@ class BackendsManager {
     } else {
       this.result = {
         [name]: {
-          ...(currentResult||{}),
-          ...result
+          ...(currentResult || {}),
+          ...result,
         },
         ...rest,
       };
@@ -59,25 +65,22 @@ class BackendsManager {
         this.notify(name, null);
       },
       (name, value, prevValue) => {
-        if (compareBackendOptions(value, prevValue))
-          return;
+        if (compareBackendOptions(value, prevValue)) return;
 
         this.unsubscribe(name);
 
-        if (!value)
-          return;
+        if (!value) return;
 
         const factory = value.factory;
 
-        if (!factory)
-          return;
+        if (!factory) return;
 
         this.notify(name, {
           backend: null,
           reconnect: defaultReconnect,
         });
 
-        const [ unsubscribe, reconnect ] = subscribeBackend(
+        const [unsubscribe, reconnect] = subscribeBackend(
           name,
           factory,
           (retryCount) => calculateRetryTimeout(value.retryTimeout, retryCount),
@@ -99,28 +102,23 @@ class BackendsManager {
   dispose() {
     this.onResults = null;
     this.subscriptions.forEach((unsubscribe) => {
-      if (unsubscribe)
-        unsubscribe();
+      if (unsubscribe) unsubscribe();
     });
   }
 }
 
 export function useBackends(options) {
-  const [ results, setResults ] = useState({});
+  const [results, setResults] = useState({});
 
   const manager = useMemoWithCleanup(() => {
     const manager = new BackendsManager(setResults);
 
-    return [
-      manager,
-      () => manager.dispose()
-    ];
-  }, [ ]);
+    return [manager, () => manager.dispose()];
+  }, []);
 
   useEffect(() => {
-    if (manager)
-      manager.update(options);
-  }, [ manager, options ]);
+    if (manager) manager.update(options);
+  }, [manager, options]);
 
   return results;
 }

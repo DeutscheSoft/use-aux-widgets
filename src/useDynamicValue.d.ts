@@ -18,12 +18,11 @@ import { DynamicValue } from '@deutschesoft/awml/src/index.pure';
  *      ignored.
  */
 export function useDynamicValue<T>(
-    dynamicValue: DynamicValue<T> | undefined | null,
-    defaultValue: T,
-    replay?: boolean
-  ): [ T, (value: T) => Promise<void> | void ];
+  dynamicValue: DynamicValue<T> | undefined | null,
+  defaultValue: T,
+  replay?: boolean
+): [T, (value: T) => Promise<void> | void];
 
 export function useDynamicValue<T>(
-    dynamicValue: DynamicValue<T> | undefined | null,
-  ): [ T | undefined, (value: T) => Promise<void> ];
-
+  dynamicValue: DynamicValue<T> | undefined | null
+): [T | undefined, (value: T) => Promise<void>];

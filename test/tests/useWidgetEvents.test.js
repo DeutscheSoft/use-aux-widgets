@@ -8,11 +8,11 @@ import test from 'node:test';
 test('useWidgetEvents', () => {
   {
     let called = 0;
-    let options = { };
+    let options = {};
     const Widget = WidgetMock;
     const callback = () => {
       called++;
-    }
+    };
     let events = {
       foo: callback,
     };

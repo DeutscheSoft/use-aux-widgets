@@ -5,7 +5,7 @@ interacted with. For example, it will be true while the user drags the handle
 of an aux Fader widget.
 
 ```ts
-const interacting = useWidgetInteraction(widget)
+const interacting = useWidgetInteraction(widget);
 ```
 
 - **`widget`**_`: Widget`_

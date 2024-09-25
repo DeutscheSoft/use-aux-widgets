@@ -17,8 +17,8 @@ interface WidgetType<T> extends Function {
  *      The event handlers to subscribe for each widget.
  */
 export function useWidgetsWithBindingsAndEvents<T>(
-  Widget: WidgetType<T>, 
-  options: Record<string,unknown>[],
+  Widget: WidgetType<T>,
+  options: Record<string, unknown>[],
   bindingDescriptions?: (IBindingDescription | IBindingDescription[])[],
   events?: (Record<string, Function> | null)[]
 ): T[];

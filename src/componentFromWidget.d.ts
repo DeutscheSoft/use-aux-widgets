@@ -20,7 +20,7 @@ interface IBindingDescriptionIncomplete {
 }
 
 interface BindingDescriptions {
-  [ name: string ]: IBindingDescriptionIncomplete;
+  [name: string]: IBindingDescriptionIncomplete;
 }
 
 /**
@@ -58,7 +58,8 @@ interface BindingDescriptions {
  *      widget with slightly different styles.
  */
 export function componentFromWidget<T>(
-    Widget: WidgetType<T>,
-    bindingDefaults?: BindingDescriptions,
-    defaultOptions?: object,
-    defaultClassName?: string): ReactComponentType<any>;
+  Widget: WidgetType<T>,
+  bindingDefaults?: BindingDescriptions,
+  defaultOptions?: object,
+  defaultClassName?: string
+): ReactComponentType<any>;
