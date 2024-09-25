@@ -5,6 +5,13 @@ export class WidgetMock {
     this.eventHandlers = new Map();
   }
 
+  static getOptionTypes() {
+    return {
+      foo: 'number',
+      bar: 'number',
+    };
+  }
+
   set(key, value) {
     this.options[key] = value;
   }
@@ -51,4 +58,10 @@ export class WidgetMock {
       cb.apply(this, args);
     });
   }
+
+  setParent(parent) {
+    this.parent = parent;
+  }
+
+  enableDraw() {}
 }
