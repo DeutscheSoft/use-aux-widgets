@@ -1,4 +1,4 @@
-import { useWidgetsEvents } from '../../index';
+import { useWidgetsEvents } from '../../index.js';
 
 function run(widget: object) {
   useWidgetsEvents(

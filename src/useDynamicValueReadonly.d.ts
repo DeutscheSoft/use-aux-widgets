@@ -1,4 +1,4 @@
-import { DynamicValue } from '@deutschesoft/awml/src/index.pure';
+import { DynamicValue } from '@deutschesoft/awml/src/index.pure.js';
 
 /**
  * Similar to `useDynamicValue`. The difference is that the current value

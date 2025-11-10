@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useDynamicValueReadonly } from '../../index';
-import { DynamicValue } from '@deutschesoft/awml/src/index.pure';
+import { useDynamicValueReadonly } from '../../index.js';
+import { DynamicValue } from '@deutschesoft/awml/src/index.pure.js';
 
 export function run(v: DynamicValue<number>): number {
   const foo = useDynamicValueReadonly(v);

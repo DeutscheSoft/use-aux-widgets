@@ -1,4 +1,4 @@
-import { IBindingDescription } from '@deutschesoft/awml/src/bindings';
+import { IBindingDescription } from '@deutschesoft/awml/src/bindings.js';
 
 interface WidgetType<T> extends Function {
   new (options: object): T;

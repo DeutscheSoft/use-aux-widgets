@@ -16,4 +16,4 @@ import {
   useWidgetOption,
   useWidgetInteraction,
   useWidgetsWithBindingsAndEvents,
-} from '../../index';
+} from '../../index.js';

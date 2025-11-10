@@ -14,7 +14,7 @@ function retryTimeout(failureCount: number) {
   return failureCount * 200;
 }
 
-function onError(err: Error) {}
+function onError(err: Error | Event) {}
 
 export function run() {
   let backend: Backend | null = null;

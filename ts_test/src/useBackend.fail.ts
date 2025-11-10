@@ -1,4 +1,4 @@
-import { useBackend } from '../../index';
+import { useBackend } from '../../index.js';
 
 function factory() {
   return 'foo';

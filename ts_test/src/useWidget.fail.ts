@@ -1,4 +1,4 @@
-import { useWidget } from '../../index';
+import { useWidget } from '../../index.js';
 
 class Widget {}
 
