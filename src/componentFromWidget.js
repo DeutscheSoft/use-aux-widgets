@@ -1,5 +1,5 @@
 import { createRef, Component, createElement } from 'react';
-import { DynamicValue } from '@deutschesoft/awml/src/index.pure.js';
+import { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
 import { Bindings } from '@deutschesoft/awml/src/bindings.js';
 import { hasOwnProperty } from './hasOwnProperty.js';
 import { forEachChangedProperty } from './forEachChangedProperty.js';

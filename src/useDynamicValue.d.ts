@@ -1,4 +1,4 @@
-import { DynamicValue } from '@deutschesoft/awml/src/index.pure.js';
+import type { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
 
 /**
  * Creates a state based on an AWML dynamic value. The returned state value will
