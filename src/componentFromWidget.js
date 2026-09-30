@@ -284,7 +284,8 @@ export function componentFromWidget(
               );
             } else {
               eventSubscriptions.delete(eventName);
-              throw new TypeError('Expected function as event handler.');
+              if (value)
+                throw new TypeError('Expected function as event handler.');
             }
           } else if (hasOwnProperty(optionTypes, name)) {
             auxWidget.set(name, value);
