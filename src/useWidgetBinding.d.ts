@@ -1,14 +1,14 @@
-import type { IBindingDescription } from '@deutschesoft/awml/src/bindings.js';
+import type { BindingDescription } from './valueTypes.js';
 
 /**
  * Create a binding or a list of bindings with a widget.
  *
  * @param {Widget} widget
  *      The widget to bind to.
- * @param {IBindingDescription | IBindingDescription[]} bindingDescription
+ * @param {BindingDescription | BindingDescription[]} bindingDescription
  *      The description of the binding(s) to create.
  */
 export function useWidgetBinding(
   widget: object,
-  bindingDescription: IBindingDescription | IBindingDescription[]
+  bindingDescription: BindingDescription | BindingDescription[]
 ): void;

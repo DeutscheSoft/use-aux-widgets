@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import type { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
+import type { BindingDescriptionShared } from './valueTypes.js';
 
 interface WidgetType<T> extends Function {
   new (options: object): T;
@@ -9,19 +9,9 @@ interface ReactComponentType<T> extends Function {
   new (): Component<T>;
 }
 
-interface IBindingDescriptionIncomplete {
-  name: string;
-  pipe?: (dv: DynamicValue<any>) => DynamicValue<any>;
-  transformReceive?: (value: any) => any;
-  transformSend?: (value: any) => any;
-  replayReceive?: boolean;
-  replaySend?: boolean;
-  debug?: boolean;
-}
-
 type BindingDescriptions = Record<
   string,
-  IBindingDescriptionIncomplete | IBindingDescriptionIncomplete[]
+  BindingDescriptionShared | BindingDescriptionShared[]
 >;
 
 /**
@@ -36,7 +26,8 @@ type BindingDescriptions = Record<
  * can be subscribed by passing a callback to the `onUseraction` property.
  *
  * In addition it is possible to define a set of bindings which can be used to
- * connect widget options to AWML DynamicValues. Each defined binding will
+ * connect widget options to AWML DynamicValues (or any object implementing
+ * `ReadableValue` or `WritableValue`). Each defined binding will
  * become available as a property under the same name. The convention is to use
  * the corresponding option name followed by a `$` character. The binding
  * specification follows the

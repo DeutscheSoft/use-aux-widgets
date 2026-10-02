@@ -16,3 +16,9 @@ export { useWidgetsEvents } from './src/useWidgetsEvents.js';
 export { useWidgetOption } from './src/useWidgetOption.js';
 export { useWidgetInteraction } from './src/useWidgetInteraction.js';
 export { useWidgetsWithBindingsAndEvents } from './src/useWidgetsWithBindingsAndEvents.js';
+export type {
+  ReadableValue,
+  WritableValue,
+  Unsubscribe,
+  BindingDescription,
+} from './src/valueTypes.js';

@@ -26,6 +26,9 @@ A collection of hooks for integrating
   stores event callbacks in a ref.
 - [`useRefAsCallback`](./docs/useRefAsCallback.md) &mdash; A simple hook which
   returns a cached wrapper function for a function stored inside of a ref.
+- [`ReadableValue` and `WritableValue`](./docs/valueTypes.md) &mdash; The
+  interfaces used for data sources. AWML `DynamicValue` implements them, but
+  any object with `subscribe()` (and `set()`) can be used.
 - [`useWidget`](./docs/useWidget.md) &mdash; A hook for creating widgets
   programmatically.
 - [`useWidgetBinding`](./docs/useWidgetBinding.md) &mdash; A hook for creating

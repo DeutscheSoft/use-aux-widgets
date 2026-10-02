@@ -1,8 +1,8 @@
 import { createRef, Component, createElement } from 'react';
-import { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
 import { Bindings } from '@deutschesoft/awml/src/bindings.js';
 import { hasOwnProperty } from './hasOwnProperty.js';
 import { forEachChangedProperty } from './forEachChangedProperty.js';
+import { isReadableValue, isWritableValue } from './valueHelpers.js';
 
 function createBindingDescription(defaultDescription, value) {
   if (Array.isArray(defaultDescription)) {
@@ -11,10 +11,18 @@ function createBindingDescription(defaultDescription, value) {
     );
   }
 
-  if (value instanceof DynamicValue) {
+  if (isWritableValue(value)) {
+    // An AWML DynamicValue or any other object with subscribe() and set().
     return {
       ...defaultDescription,
       backendValue: value,
+    };
+  } else if (isReadableValue(value)) {
+    // Without set() we can only bind in one direction.
+    return {
+      ...defaultDescription,
+      backendValue: value,
+      readonly: true,
     };
   } else if (typeof value === 'object') {
     return {
@@ -25,7 +33,7 @@ function createBindingDescription(defaultDescription, value) {
     return null;
   } else {
     throw new TypeError(
-      'Unexpected value for binding description. Expected DynamicValue or BindingDescription.'
+      'Unexpected value for binding description. Expected a value with subscribe() and set() (e.g. DynamicValue) or BindingDescription.'
     );
   }
 }
@@ -92,7 +100,8 @@ function updateRef(ref, value) {
  * can be subscribed by passing a callback to the `onUseraction` property.
  *
  * In addition it is possible to define a set of bindings which can be used to
- * connect widget options to AWML DynamicValues. Each defined binding will
+ * connect widget options to AWML DynamicValues (or any object implementing
+ * `ReadableValue` or `WritableValue`). Each defined binding will
  * become available as a property under the same name. The convention is to use
  * the corresponding option name followed by a `$` character. The binding
  * specification follows the

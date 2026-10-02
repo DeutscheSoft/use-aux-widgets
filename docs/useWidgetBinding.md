@@ -7,8 +7,11 @@ useWidgetBinding(widget, bindings);
 ```
 
 - **`widget`**_`: Widget`_ - The widget to bind to.
-- **`bindings`**_`: IBindingDescription | IBindingDescription[]`_ - The
-  description of the binding(s) to create.
+- **`bindings`**_`: BindingDescription | BindingDescription[]`_ - The
+  description of the binding(s) to create. The `backendValue` can be an AWML
+  `DynamicValue` or any [`WritableValue`](./valueTypes.md#writablevalue). A
+  [`ReadableValue`](./valueTypes.md#readablevalue) without a `set()` method can
+  be used by also specifying `readonly: true`.
 
 ## Usage
 

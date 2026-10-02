@@ -1,4 +1,4 @@
-import type { IBindingDescription } from '@deutschesoft/awml/src/bindings.js';
+import type { BindingDescription } from './valueTypes.js';
 
 interface WidgetType<T> extends Function {
   new (options: object): T;
@@ -11,7 +11,7 @@ interface WidgetType<T> extends Function {
  *      The widget implementation to create widgets from.
  * @param {Object[]} options
  *      The options of the widget.
- * @param {(IBindingDescription | IBindingDescription[])[]} bindingDescriptions
+ * @param {(BindingDescription | BindingDescription[])[]} bindingDescriptions
  *      The description of the binding(s) to create for each widget.
  * @param {Record<string,function>[]} events
  *      The event handlers to subscribe for each widget.
@@ -19,6 +19,6 @@ interface WidgetType<T> extends Function {
 export function useWidgetsWithBindingsAndEvents<T>(
   Widget: WidgetType<T>,
   options: Record<string, unknown>[],
-  bindingDescriptions?: (IBindingDescription | IBindingDescription[])[],
+  bindingDescriptions?: (BindingDescription | BindingDescription[])[],
   events?: (Record<string, Function> | null)[]
 ): T[];

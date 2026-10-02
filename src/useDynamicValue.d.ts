@@ -1,11 +1,13 @@
-import type { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
+import type { WritableValue } from './valueTypes.js';
 
 /**
- * Creates a state based on an AWML dynamic value. The returned state value will
- * change whenever the dynamic value changes. The returned setter will - when
- * called - call `.set()` on the dynamic value.
+ * Creates a state based on a dynamic value. This can be an AWML `DynamicValue`
+ * or any other object which implements `WritableValue`, i.e. an object with a
+ * `subscribe()` and a `set()` method. The returned state value will change
+ * whenever the dynamic value changes. The returned setter will - when called -
+ * call `.set()` on the dynamic value.
  *
- * @param {DynamicValue|undefined|null} dynamicValue
+ * @param {WritableValue|undefined|null} dynamicValue
  *      The dynamic value to subscribe to.
  *
  * @param [defaultValue]
@@ -13,16 +15,16 @@ import type { DynamicValue } from '@deutschesoft/awml/src/dynamic_value.js';
  *      has a value, it is used instead of `defaultValue`.
  *
  * @param {boolean} [replay=true]
- *      Used as the second argument to `DynamicValue.subscribe`. This means
- *      that, if set to `false`, the current value of the dynamic value is not
- *      ignored.
+ *      If set to `false`, the current value of the dynamic value is ignored
+ *      when subscribing. This is passed as the second argument to `subscribe`
+ *      only if it is `false`.
  */
 export function useDynamicValue<T>(
-  dynamicValue: DynamicValue<T> | undefined | null,
+  dynamicValue: WritableValue<T> | undefined | null,
   defaultValue: T,
   replay?: boolean
 ): [T, (value: T) => Promise<void> | void];
 
 export function useDynamicValue<T>(
-  dynamicValue: DynamicValue<T> | undefined | null
-): [T | undefined, (value: T) => Promise<void>];
+  dynamicValue: WritableValue<T> | undefined | null
+): [T | undefined, (value: T) => Promise<void> | void];
