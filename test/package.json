@@ -7,9 +7,7 @@
     "test": "rm -rf tests/src/* && cp ../src/* tests/src/ && node --test tests/*.test.js",
     "test:only": "rm -rf tests/src/* && cp ../src/* tests/src/ && node --test-only --test tests/*.test.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
   "type": "module",
   "dependencies": {
     "@deutschesoft/awml": "^2.2.6",
