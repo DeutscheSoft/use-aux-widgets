@@ -1,3 +1,5 @@
+import type { WidgetLike } from './widgetTypes.js';
+
 /**
  * Subscribes to an event in a widget. The widget usually is stored in a state
  * and initialized by setting the `widgetRef` on a component created using
@@ -14,7 +16,7 @@
  *      The event callback.
  */
 export function useWidgetEvent(
-  widget: object,
+  widget: WidgetLike,
   eventName?: string,
   callback?: Function
 ): void;

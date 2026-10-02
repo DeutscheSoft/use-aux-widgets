@@ -22,3 +22,4 @@ export type {
   Unsubscribe,
   BindingDescription,
 } from './src/valueTypes.js';
+export type { WidgetLike } from './src/widgetTypes.js';

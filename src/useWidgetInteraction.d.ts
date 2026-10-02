@@ -1,3 +1,5 @@
+import type { WidgetLike } from './widgetTypes.js';
+
 /**
  * A state which is is true if the given widget is currently
  * interacted with. For example, it will be true while the user drags the handle
@@ -10,4 +12,7 @@
  * @returns {boolean}
  *      Returns true while the widget is interacted with.
  */
-export function useWidgetInteraction(widget, debounce?: number): boolean;
+export function useWidgetInteraction(
+  widget: WidgetLike,
+  debounce?: number
+): boolean;

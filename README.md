@@ -51,6 +51,14 @@ A collection of hooks for integrating
   combines [`useWidgets`](./docs/useWidgets.md), [`useWidgetsEvents`](./docs/useWidgetsEvents.md) and
   [`useWidgetsBindings`](./docs/useWidgetsBindings.md).
 
+## TypeScript
+
+`aux-widgets` does not yet ship TypeScript declarations, so widget arguments of
+the hooks are typed as `WidgetLike`, which is currently `unknown`: any value
+can be passed as a widget, and no `declare module` is needed for `aux-widgets`.
+Once `aux-widgets` provides declarations, `WidgetLike` will be replaced by the
+actual widget type.
+
 ## License
 
 `use-aux-widgets` is available under the terms of the GNU General Public License version 2.

@@ -1,3 +1,5 @@
+import type { WidgetLike } from './widgetTypes.js';
+
 /**
  * Returns the value of an aux widget option.
  *
@@ -20,7 +22,7 @@
  *      Returns the value of the option or `defaultValue` if `widget` is `null`.
  */
 export function useWidgetOption<T>(
-  widget,
+  widget: WidgetLike,
   name: string,
   defaultValue: T,
   debounce?: number

@@ -1,4 +1,5 @@
 import type { BindingDescription } from './valueTypes.js';
+import type { WidgetLike } from './widgetTypes.js';
 
 /**
  * Create a binding or a list of bindings with a widget.
@@ -9,6 +10,6 @@ import type { BindingDescription } from './valueTypes.js';
  *      The description of the binding(s) to create.
  */
 export function useWidgetBinding(
-  widget: object,
+  widget: WidgetLike,
   bindingDescription: BindingDescription | BindingDescription[]
 ): void;

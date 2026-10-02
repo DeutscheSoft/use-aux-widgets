@@ -5,7 +5,7 @@ function factory() {
 }
 
 export function run() {
-  let backend: Backend | null = null;
+  let backend: object | null = null;
   let reconnect: () => void;
 
   {
