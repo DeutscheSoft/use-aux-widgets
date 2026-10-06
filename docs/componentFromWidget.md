@@ -21,6 +21,20 @@ interface of AWML.
 Both the `className` and `style` properties of standard HTML elements are
 applied to the `<div>` element used by the widget.
 
+The `widgetRef` property can be used to get access to the widget instance. It
+accepts either a React ref object or a callback. It is set once the widget has
+been created (after the component has mounted) and reset to `null` when the
+component unmounts. If the widget instance is needed for rendering, pass a
+state setter (e.g. `widgetRef={setWidget}`) and handle the state being `null`
+until the widget exists. The widget is owned by the component: do not destroy it
+yourself.
+
+The component should be created only once. Usually this is done at module level.
+If the component depends on values from your component (e.g. the default
+options), create it inside of `useMemo` instead. Calling `componentFromWidget`
+on every render creates a new component type each time, which remounts (and
+recreates) the widget.
+
 ```ts
 const component = componentFromWidget(
   widgetImplementation,

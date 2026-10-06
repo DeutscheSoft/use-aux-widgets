@@ -10,6 +10,9 @@ A collection of hooks for integrating
 
 ## Usage
 
+New to the library? Start with the [overview](./docs/overview.md). It explains
+which function to pick for which task.
+
 - [`componentFromWidget`](./docs/componentFromWidget.md) &mdash; Creates a React
   component from an aux widget.
 - [`useBackend`](./docs/useBackend.md) &mdash; Creates a backend which
