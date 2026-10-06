@@ -8,17 +8,17 @@ AWML `DynamicValue` implements both, so existing code continues to work.
 
 ```ts
 interface ReadableValue<T> {
-  subscribe(subscriber: (value: T) => void, replay?: boolean): Unsubscribe;
+  subscribe(subscriber: (value: T) => void, replay?: boolean): () => void;
   readonly hasValue?: boolean;
   readonly value?: T;
 }
-
-type Unsubscribe = (() => void) | { unsubscribe(): void };
 ```
 
-- `subscribe` returns either an unsubscribe function (AWML) or an object with an
-  `unsubscribe()` method (RxJS). The current value (if any) is expected to be
-  emitted to new subscribers.
+- `subscribe` returns an unsubscribe **function**, as AWML `DynamicValue` does.
+  Objects with an `unsubscribe()` method (e.g. RxJS subscriptions) are not
+  supported here, because AWML does not support them in bindings. Use
+  [`fromSubscribable`](./fromSubscribable.md) to adapt such sources. The current
+  value (if any) is expected to be emitted to new subscribers.
 - The `replay` argument is only passed if it is `false`. Implementations which
   do not support it ignore it.
 - `hasValue` and `value` are optional and only used to read the initial value
@@ -26,8 +26,8 @@ type Unsubscribe = (() => void) | { unsubscribe(): void };
   defined it decides whether `value` is read, otherwise `value` is read if it
   exists. Errors thrown when reading `value` are ignored.
 
-RxJS `BehaviorSubject`, `Subject` and `Observable` can be used as a
-`ReadableValue`.
+RxJS `BehaviorSubject`, `Subject` and `Observable` are not a `ReadableValue`
+directly, but can be adapted using [`fromSubscribable`](./fromSubscribable.md).
 
 ## `WritableValue`
 

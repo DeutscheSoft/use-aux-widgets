@@ -3,6 +3,7 @@ import { useDynamicValue } from './src/useDynamicValue.js';
 import { useDynamicValueReadonly } from './src/useDynamicValueReadonly.js';
 import { strictEqual, deepStrictEqual, throws, ok } from 'node:assert';
 import { act } from '@testing-library/react';
+import { fromSubscribable } from './src/fromSubscribable.js';
 import { PlainValue, SubjectLikeValue, StreamValue } from './ValueMock.js';
 import test from 'node:test';
 
@@ -58,16 +59,18 @@ test('useDynamicValue with plain objects', () => {
   }
 });
 
-test('useDynamicValue with subject-like objects', () => {
-  const dv = new SubjectLikeValue(1);
+test('useDynamicValue with an adapted subject-like object', () => {
+  const subject = new SubjectLikeValue(1);
+  const dv = fromSubscribable(subject, (value) => subject.next(value));
   const { result, unmount } = renderHook(() => useDynamicValue(dv));
 
-  // no hasValue, but value is used.
+  // The initial value is received from the subscription.
   strictEqual(result.current[0], 1);
-  assertNoArgs(dv, 'No error callback must be passed.');
+  // The subject must not see the replay argument (an error callback in RxJS).
+  subject.subscribeArgs.forEach((args) => deepStrictEqual(args, []));
 
   act(() => {
-    dv.next(2);
+    subject.next(2);
   });
 
   strictEqual(result.current[0], 2);
@@ -76,11 +79,11 @@ test('useDynamicValue with subject-like objects', () => {
     result.current[1](3);
   });
 
-  strictEqual(dv.value, 3);
+  strictEqual(subject.value, 3);
   strictEqual(result.current[0], 3);
 
   unmount();
-  strictEqual(dv.subscribers.size, 0, 'unsubscribe() was not called.');
+  strictEqual(subject.subscribers.size, 0, 'unsubscribe() was not called.');
 });
 
 test('useDynamicValue with a readonly object', () => {

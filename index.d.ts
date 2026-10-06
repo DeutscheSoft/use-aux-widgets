@@ -1,4 +1,5 @@
 export { componentFromWidget } from './src/componentFromWidget.js';
+export { fromSubscribable } from './src/fromSubscribable.js';
 export { useBackend } from './src/useBackend.js';
 export { useBackends } from './src/useBackends.js';
 export { useDebouncedState } from './src/useDebouncedState.js';
@@ -19,7 +20,7 @@ export { useWidgetsWithBindingsAndEvents } from './src/useWidgetsWithBindingsAnd
 export type {
   ReadableValue,
   WritableValue,
-  Unsubscribe,
+  Subscribable,
   BindingDescription,
 } from './src/valueTypes.js';
 export type { WidgetLike } from './src/widgetTypes.js';

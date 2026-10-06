@@ -42,7 +42,8 @@ export class PlainValue {
 }
 
 /**
- * Behaves like a BehaviorSubject: There is no `hasValue`, the `value` is always
+ * Behaves like a BehaviorSubject (this is NOT a ReadableValue, because it
+ * returns a subscription object; use fromSubscribable): There is no `hasValue`, the `value` is always
  * available, `subscribe` always replays and returns an object with an
  * `unsubscribe` method. Note that the second argument to `subscribe` is an
  * error callback in RxJS.

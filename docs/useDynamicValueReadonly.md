@@ -3,7 +3,8 @@
 Similar to `useDynamicValue`. The difference is that the returned state is
 only the current value and no setter. Any object which implements
 [`ReadableValue`](./valueTypes.md#readablevalue) can be used, e.g. an AWML
-`DynamicValue` or an RxJS `BehaviorSubject`.
+`DynamicValue`, or an RxJS `BehaviorSubject` adapted using
+[`fromSubscribable`](./fromSubscribable.md).
 
 ```ts
 const value = useDynamicValueReadonly(dynamicValue, defaultValue, replay);

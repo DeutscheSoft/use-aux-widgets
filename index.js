@@ -1,4 +1,5 @@
 export { componentFromWidget } from './src/componentFromWidget.js';
+export { fromSubscribable } from './src/fromSubscribable.js';
 export { useBackend } from './src/useBackend.js';
 export { useBackends } from './src/useBackends.js';
 export { useDebouncedState } from './src/useDebouncedState.js';

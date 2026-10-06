@@ -48,22 +48,14 @@ export function peekValue(readable) {
 }
 
 /**
- * Subscribes to a `ReadableValue` and returns an unsubscribe function.
+ * Subscribes to a `ReadableValue` and returns the unsubscribe function.
  *
  * The `replay` argument is only passed to `subscribe` if it is `false`. This
- * way the default case works with implementations whose `subscribe()` has a
- * different second argument (e.g. RxJS).
+ * way the default case also works with implementations whose `subscribe()` has
+ * a different second argument.
  */
 export function subscribeValue(readable, callback, replay = true) {
-  const subscription =
-    replay === false
-      ? readable.subscribe(callback, false)
-      : readable.subscribe(callback);
-
-  if (typeof subscription === 'function') return subscription;
-
-  if (subscription && typeof subscription.unsubscribe === 'function')
-    return () => subscription.unsubscribe();
-
-  return () => {};
+  return replay === false
+    ? readable.subscribe(callback, false)
+    : readable.subscribe(callback);
 }

@@ -15,6 +15,8 @@ which function to pick for which task.
 
 - [`componentFromWidget`](./docs/componentFromWidget.md) &mdash; Creates a React
   component from an aux widget.
+- [`fromSubscribable`](./docs/fromSubscribable.md) &mdash; Adapts an
+  observable-like source (e.g. RxJS) to `ReadableValue` or `WritableValue`.
 - [`useBackend`](./docs/useBackend.md) &mdash; Creates a backend which
   automatically reconnects.
 - [`useBackends`](./docs/useBackends.md) &mdash; Creates a list of backends.

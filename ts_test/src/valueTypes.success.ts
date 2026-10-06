@@ -3,6 +3,7 @@ import {
   useDynamicValueReadonly,
   useWidgetBinding,
   useWidgetsBindings,
+  fromSubscribable,
 } from '../../index.js';
 import type {
   ReadableValue,
@@ -28,14 +29,15 @@ class Plain implements WritableValue<string> {
   set(value: string) {}
 }
 
-// A subject-like object.
-class SubjectLike implements WritableValue<number> {
+// A subject-like object (subscribe returns a subscription object). It needs to
+// be adapted using fromSubscribable.
+class SubjectLike {
   value = 1;
   subscribe(cb: (value: number) => void) {
     cb(this.value);
     return { unsubscribe() {} };
   }
-  set(value: number) {}
+  next(value: number) {}
 }
 
 // A readonly object.
@@ -45,7 +47,8 @@ class Stream implements ReadableValue<boolean> {
   }
 }
 
-export function hooks(a: Plain, b: SubjectLike, c: Stream) {
+export function hooks(a: Plain, subject: SubjectLike, c: Stream) {
+  const b = fromSubscribable(subject, (value) => subject.next(value));
   const [s, setS] = useDynamicValue(a, '');
   const [n, setN] = useDynamicValue(b);
   const [x, setX] = useDynamicValue(null as WritableValue<number> | null, 1);
@@ -66,14 +69,17 @@ export function hooks(a: Plain, b: SubjectLike, c: Stream) {
 export function bindings(
   widget: object,
   a: Plain,
-  b: SubjectLike,
+  subject: SubjectLike,
   c: Stream,
   d: DynamicValue<number>
 ) {
+  const b = fromSubscribable(subject, (value) => subject.next(value));
+  const e = fromSubscribable(subject);
   useWidgetBinding(widget, { name: 'foo', backendValue: a });
   useWidgetBinding(widget, [
     { name: 'foo', backendValue: b },
     { name: 'bar', backendValue: c, readonly: true },
+    { name: 'qux', backendValue: e, readonly: true },
     { name: 'baz', backendValue: d, readonly: true },
     { name: 'baz', src: 'foo:bar' },
   ]);

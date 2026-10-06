@@ -1,16 +1,13 @@
 /**
- * The result of subscribing to a value. This is either a plain function (as
- * returned by AWML `DynamicValue.subscribe()`) or an object with an
- * `unsubscribe()` method (as returned by e.g. RxJS).
- */
-export type Unsubscribe = (() => void) | { unsubscribe(): void };
-
-/**
  * A readable stream of values. Any AWML `DynamicValue` implements this
- * interface, as do many other observable-like objects.
+ * interface, as do other objects with the same shape.
  *
  * Implementations are expected to emit the current value (if any) to new
  * subscribers (`replay`), similar to a `BehaviorSubject`.
+ *
+ * Note that `subscribe()` must return an unsubscribe *function*, as AWML does
+ * not support anything else in bindings. Use `fromSubscribable` to adapt
+ * sources which return a subscription object (e.g. RxJS).
  */
 export interface ReadableValue<T> {
   /**
@@ -23,7 +20,7 @@ export interface ReadableValue<T> {
    *      subscriber on subscribe. This argument is only passed when it is
    *      `false`. Implementations which do not support it will ignore it.
    */
-  subscribe(subscriber: (value: T) => void, replay?: boolean): Unsubscribe;
+  subscribe(subscriber: (value: T) => void, replay?: boolean): () => void;
 
   /**
    * Optional. Whether a current value is available. If defined, it is used to
@@ -94,3 +91,13 @@ export type BindingDescription =
   | BindingDescriptionWritableBackendValue
   | BindingDescriptionReadonlyBackendValue
   | BindingDescriptionSrc;
+
+/**
+ * An observable-like source whose `subscribe()` returns either an unsubscribe
+ * function or a subscription object with an `unsubscribe()` method. RxJS
+ * `Observable`, `Subject` and `BehaviorSubject` are examples. Use
+ * `fromSubscribable` to turn it into a `ReadableValue` or `WritableValue`.
+ */
+export interface Subscribable<T> {
+  subscribe(next: (value: T) => void): (() => void) | { unsubscribe(): void };
+}

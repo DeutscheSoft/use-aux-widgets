@@ -5,7 +5,8 @@ import { useWidgetBinding } from './src/useWidgetBinding.js';
 import { componentFromWidget } from './src/componentFromWidget.js';
 import { strictEqual, deepStrictEqual } from 'node:assert';
 import { WidgetMock } from './WidgetMock.js';
-import { PlainValue, StreamValue } from './ValueMock.js';
+import { PlainValue, StreamValue, SubjectLikeValue } from './ValueMock.js';
+import { fromSubscribable } from './src/fromSubscribable.js';
 import { act, render } from '@testing-library/react';
 import { createElement } from 'react';
 import test from 'node:test';
@@ -90,4 +91,47 @@ test('componentFromWidget with plain objects', () => {
   unmount();
   strictEqual(writable.subscribers.size, 0);
   strictEqual(readable.subscribers.size, 0);
+});
+
+test('useWidgetBinding with adapted subscription objects', () => {
+  // AWML cannot handle subscribe() returning an object. This is why
+  // fromSubscribable is needed. Make sure bindings are cleaned up correctly.
+  {
+    const subject = new SubjectLikeValue(1);
+    const backendValue = fromSubscribable(subject, (v) => subject.next(v));
+    const { result, unmount } = renderHook(() => {
+      const widget = useWidget(WidgetMock, { foo: 3 });
+      useWidgetBinding(widget, { name: 'foo', backendValue });
+      return widget;
+    });
+
+    const w = result.current;
+    deepStrictEqual(w.options, { foo: 1 });
+
+    act(() => {
+      subject.next(3);
+    });
+    deepStrictEqual(w.options, { foo: 3 });
+
+    w.emit('useraction', 'foo', 9);
+    strictEqual(subject.value, 9);
+
+    unmount();
+    strictEqual(subject.subscribers.size, 0, 'two-way binding leaked.');
+  }
+
+  {
+    const subject = new SubjectLikeValue(1);
+    const backendValue = fromSubscribable(subject);
+    const { result, unmount } = renderHook(() => {
+      const widget = useWidget(WidgetMock, { foo: 3 });
+      useWidgetBinding(widget, { name: 'foo', backendValue, readonly: true });
+      return widget;
+    });
+
+    deepStrictEqual(result.current.options, { foo: 1 });
+
+    unmount();
+    strictEqual(subject.subscribers.size, 0, 'readonly binding leaked.');
+  }
 });
